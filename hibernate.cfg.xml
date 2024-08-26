@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<configuration>
+	<!-- Add this element -->
+	<configSections>
+		<section
+			name="hibernate-configuration"
+			type="NHibernate.Cfg.ConfigurationSectionHandler, NHibernate" />
+	</configSections>
+
+	<!-- Add this element -->
+	<hibernate-configuration xmlns="urn:nhibernate-configuration-2.2">
+		<session-factory>
+			<property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
+			<property name="connection.connection_string">
+				Server=localhost\SQLEXPRESS;initial catalog=DuckHunt;Integrated Security=True
+			</property>
+
+			<mapping assembly="DuckHuntAPI" />
+		</session-factory>
+	</hibernate-configuration>
+
+	<!-- Leave the other sections unchanged -->
+	<system.web>
+	</system.web>
+</configuration>
