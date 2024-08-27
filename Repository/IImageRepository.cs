@@ -7,6 +7,7 @@ namespace DuckHuntAPI.Models
 {
     public interface IImageRepository
     {
-        public Byte[] FindById(int id);
+        public List<Image> FindAllImages();
+        public Image FindById(int id);
     }
 }

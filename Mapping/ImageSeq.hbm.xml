@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+    namespace="DuckHuntAPI.Models" assembly="DuckHuntAPI">
+    <class name="ImageSeq" table="ImageSeq">
+
+		<id name="Id">
+			<column name="Id" sql-type="int"/>
+		</id>
+		
+		<property name="AnimationId">
+			<column name ="AnimacaoId" sql-type="int"/>
+		</property>
+		
+		<property name="ImageIndex">
+			<column name="ImageIndex" sql-type="int"/>
+		</property>
+	
+		<property name="ImageId">
+			<column name="ImageId" sql-type="int"/>
+		</property>
+	
+	
+</class>
+</hibernate-mapping>

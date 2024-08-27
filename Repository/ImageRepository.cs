@@ -14,6 +14,11 @@ namespace DuckHuntAPI.Models
             session = NHibernateHelper.GetSessionFactory().OpenSession();
         }
 
+        public List<Image> FindAllImages() {
+            return session.Query<Image>().ToList();
+        }
+        
+
         public Image FindById(int id) {
             Image currentImage = session.Get<Image>(id);
 

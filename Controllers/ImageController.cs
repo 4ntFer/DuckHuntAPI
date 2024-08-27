@@ -1,9 +1,6 @@
 ﻿using DuckHuntAPI.Models;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Controllers
 {
@@ -12,14 +9,36 @@ namespace DuckHuntAPI.Controllers
     public class ImageController : Controller
     {
         [HttpGet]
-        public IActionResult Get(int id) {
-            Image ir = new ImageRepository().FindById(id);
+        public IActionResult GetAllImages() {
+            List<Image> imagesList = new ImageRepository().FindAllImages();
+            List<string> urlList;
 
-            if (ir == null) {
+            if (imagesList.Count == 0)
+            {
+                return BadRequest("Nenhuma imagem disponivel.");
+            }
+            else {
+                urlList = new List<string>();
+                foreach (Image i in imagesList)
+                {
+                    urlList.Add(Environment.SOURCE_URL + "/image/" + i.id);
+                }
+
+                return Ok(urlList);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById(int id) {
+            Image image = new ImageRepository().FindById(id);
+
+            if (image == null) {
                 return BadRequest("Id não encontrado.");
             }
 
-            return File(ir.data, "image/png");
+            return File(image.data, "image/png");
         }
+        
     }
 }

@@ -11,11 +11,15 @@
   <ItemGroup>
     <None Remove="Character.hbm.xml" />
     <None Remove="Image.hbm.xml" />
+    <None Remove="Mapping\Animation.hbm.xml" />
+    <None Remove="Mapping\ImageSeq.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Character.hbm.xml" />
-    <EmbeddedResource Include="Image.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Animation.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Character.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Image.hbm.xml" />
+    <EmbeddedResource Include="Mapping\ImageSeq.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
