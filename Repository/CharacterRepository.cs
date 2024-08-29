@@ -17,5 +17,12 @@ namespace DuckHuntAPI.Models
         {
             return session.Get<Character>(id);    
         }
+
+        public Character FindByName(string name) {
+            List<Character> list = session.Query<Character>().Where(c => c.name == name)().ToList();
+            if (list.Count != 0)
+                return list.ElementAt(0);
+            return null;
+        }
     }
 }

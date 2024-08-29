@@ -1,4 +1,5 @@
-﻿using DuckHuntAPI.Models;
+﻿using DuckHuntAPI.Classes;
+using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -21,23 +22,12 @@ namespace DuckHuntAPI.Controllers
             {
                 animationsReturned = new List<Dictionary<string, object>>();
                 foreach (Animation abd in animationsBDList)
-                {
+                {   
                     Dictionary<string, object> ar = new Dictionary<string, object>();
-                    List<string> sprites;
-                    List<ImageSeq> imgSeqList;
 
                     ar["Name"] = abd.Name;
                     ar["CharacterName"] = new CharacterRepository().FindById(abd.CharacterId).name;
-
-                    sprites = new List<string>();
-                    imgSeqList = new ImageSeqRepository().findByAnimation(abd.Id);
-
-                    foreach (ImageSeq imgseq in imgSeqList)
-                    {
-                        sprites.Add(Environment.SOURCE_URL + "/image/" + imgseq.ImageId);
-                    }
-
-                    ar["Sprites"] = sprites;
+                    ar["Images"] = new AnimationObject(abd).GetImageUrlList();
 
                     animationsReturned.Add(ar);
                 }

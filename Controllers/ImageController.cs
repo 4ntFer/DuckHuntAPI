@@ -39,6 +39,18 @@ namespace DuckHuntAPI.Controllers
 
             return File(image.data, "image/png");
         }
+
+        [HttpGet]
+        [Route("ByCharacter/{CharacterName}")]
+        public IActionResult GetByCharacter(string CharacterName) {
+            Character c = new CharacterRepository().FindByName(CharacterName);
+
+            if (c != null) {
+                //TODO
+            }
+
+            return BadRequest();
+        }
         
     }
 }
