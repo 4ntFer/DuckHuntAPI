@@ -20,6 +20,5 @@ namespace DuckHuntAPI
 
             return _sessionFactory;
         }
-
     }
 }
