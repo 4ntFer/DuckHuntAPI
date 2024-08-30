@@ -10,7 +10,7 @@ namespace DuckHuntAPI.Repository
 {
     public class AnimationRepository
     {
-        private readonly ISession _session;
+        protected readonly ISession _session;
 
         public AnimationRepository() {
             _session = NHibernateHelper.GetSessionFactory().OpenSession();

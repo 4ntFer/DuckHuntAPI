@@ -15,7 +15,8 @@ namespace DuckHuntAPI.Controllers
     {
         [HttpGet]
         public ActionResult Get() {
-            List<Animation> animationsBDList = new AnimationRepository().findAll();
+            AnimationObjectFactory Factory = new AnimationObjectFactory();
+            List<Animation> animationsBDList = Factory.findAll();
             List<Dictionary<string, object>> animationsReturned;
 
             if (animationsBDList.Count != 0)
@@ -23,11 +24,17 @@ namespace DuckHuntAPI.Controllers
                 animationsReturned = new List<Dictionary<string, object>>();
                 foreach (Animation abd in animationsBDList)
                 {   
+                    AnimationObject aobj = new AnimationObject(abd, Factory);
                     Dictionary<string, object> ar = new Dictionary<string, object>();
+                    List<string> imgUrlList = new List<string>();
 
                     ar["Name"] = abd.Name;
                     ar["CharacterName"] = new CharacterRepository().FindById(abd.CharacterId).name;
-                    ar["Images"] = new AnimationObject(abd).GetImageUrlList();
+                    ar["Images"] = imgUrlList;
+
+                    foreach (ImageObject imgobj in aobj.GetImages()) {
+                        imgUrlList.Add(imgobj.url);
+                    }
 
                     animationsReturned.Add(ar);
                 }

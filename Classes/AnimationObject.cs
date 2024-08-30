@@ -8,30 +8,31 @@ using System.Threading.Tasks;
 namespace DuckHuntAPI.Classes
 {
     public class AnimationObject : Animation
-    {
-        private List<Image> Images; //TODO: DEFINIR GETTER
+    {   
+        private List<ImageObject> Images; //TODO: DEFINIR GETTER
+        private AnimationObjectFactory Factory;
         
-         public AnimationObject(Animation animation) {
+         public AnimationObject(Animation animation, AnimationObjectFactory Factory) {
             this.Id = animation.Id;
             this.Name = animation.Name;
             this.ImageSeqId = animation.ImageSeqId;
+            this.Factory = Factory;
         }
         //TODO: URL
-        //TODO: Remover método, adicionar getter de images
+        //TODO: adicionar getter de images
         //      Fazer LoadImages e getUrl para Images Object
-        public List<string> GetImageUrlList(){
-            List<string> ImgUrlList;
-            List<ImageSeq> imgSeqList;
 
-            ImgUrlList = new List<string>();
-            imgSeqList = new ImageSeqRepository().findByAnimation(this.Id);
-
-            foreach (ImageSeq imgseq in imgSeqList)
-            {
-                ImgUrlList.Add(Environment.SOURCE_URL + "/image/" + imgseq.ImageId);
+        public List<ImageObject> GetImages() {
+            if (Images == null) {
+                LoadImageObjects();
             }
 
-            return ImgUrlList;
+            return Images;
+        }
+
+        private List<ImageObject> LoadImageObjects() {
+            Images = Factory.GetImagesOf(this.Id);
+            return Images;
         }
     }
 }

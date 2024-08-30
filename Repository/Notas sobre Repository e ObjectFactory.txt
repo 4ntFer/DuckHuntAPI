@@ -1,0 +1,12 @@
+﻿Objetos de classes Repository devem acessar somente uma unica tabela, enquanto ObjectFactory pode acessar diferentes tabelas.
+Essa escolha é necessária pela ideia de que da ideia de que personagens, animações, imagens e etc são objetos com propriedades diferetes de suas respec-
+tivas tabelas no banco. Por exemplo: Um personagem tem animações, mesmo que a sua tabela no banco tenha somente Id e Nome. Assim, os objetos são 
+construidos a partir da informação de varias tabelas sem que o repository da tabela realize query para outras tabelas.
+
+Além disso, cada repository abre uma sessão todas as vezes que é instanciado. Essa não é melhor forma de fazer e evnetualmente deve ser alterada.
+Mas, com a implementação de um object factory as consultas a outras tabelas são realizadas na mesma sessão da super classe.
+
+Dessa forma, ObjectFacotory são interfaces entre tabelas - objeto.
+
+TODO: após alterar o Session Factory para uma sessão por contexto, alterar heranças de ObjectFactory para composição. Assim, um mesmo ObjectFactory poderá
+ser composto de diferentes Repository, de formas que ele não executes consultas através de uma sessão diretamente.

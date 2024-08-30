@@ -8,19 +8,19 @@ namespace DuckHuntAPI.Models
 {
     public class ImageRepository
     {
-        private readonly ISession session;
+        protected readonly ISession _session;
 
         public ImageRepository() {
-            session = NHibernateHelper.GetSessionFactory().OpenSession();
+            _session = NHibernateHelper.GetSessionFactory().OpenSession();
         }
 
         public List<Image> FindAllImages() {
-            return session.Query<Image>().ToList();
+            return _session.Query<Image>().ToList();
         }
         
 
         public Image FindById(int id) {
-            Image currentImage = session.Get<Image>(id);
+            Image currentImage = _session.Get<Image>(id);
 
             return currentImage;
         }

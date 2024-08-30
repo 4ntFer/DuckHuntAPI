@@ -24,9 +24,5 @@ namespace DuckHuntAPI.Repository
             return _session.Query<ImageSeq>().Where(imgseq=> imgseq.Id == id).ToList();
         }
 
-        public List<ImageSeq> findByAnimation(int id)
-        {
-            return _session.Query<ImageSeq>().ToList()/*.Where(imgseq => imgseq.AnimationId == id).OrderBy(imgseq => imgseq.ImageId).ToList() */;
-        }
     }
 }
