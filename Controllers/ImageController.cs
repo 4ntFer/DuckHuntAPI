@@ -43,11 +43,11 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         [Route("ByCharacter/{CharacterName}")]
         public IActionResult GetByCharacter(string CharacterName) {
-            Character c = new CharacterRepository().FindByName(CharacterName);
+            //Character c = new CharacterRepository().FindByName(CharacterName);
 
-            if (c != null) {
+            //if (c != null) {
                 //TODO
-            }
+            //}
 
             return BadRequest();
         }

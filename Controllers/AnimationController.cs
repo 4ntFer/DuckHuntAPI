@@ -29,7 +29,7 @@ namespace DuckHuntAPI.Controllers
                     List<string> imgUrlList = new List<string>();
 
                     ar["Name"] = abd.Name;
-                    ar["CharacterName"] = new CharacterRepository().FindById(abd.CharacterId).name;
+                    //ar["CharacterName"] = new CharacterRepository().FindById(abd.CharacterId).name;
                     ar["Images"] = imgUrlList;
 
                     foreach (ImageObject imgobj in aobj.GetImages()) {
