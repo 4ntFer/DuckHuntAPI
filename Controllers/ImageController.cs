@@ -10,7 +10,7 @@ namespace DuckHuntAPI.Controllers
     {
         [HttpGet]
         public IActionResult GetAllImages() {
-            List<Image> imagesList = new ImageRepository().FindAllImages();
+            List<Image> imagesList = new ImageRepository(NHibernateHelper.GetSession(HttpContext)).FindAllImages();
             List<string> urlList;
 
             if (imagesList.Count == 0)
@@ -31,7 +31,7 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         [Route("{id}")]
         public IActionResult GetById(int id) {
-            Image image = new ImageRepository().FindById(id);
+            Image image = new ImageRepository(NHibernateHelper.GetSession(HttpContext)).FindById(id);
 
             if (image == null) {
                 return BadRequest("Id não encontrado.");

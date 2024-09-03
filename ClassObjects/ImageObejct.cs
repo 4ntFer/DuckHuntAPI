@@ -1,16 +1,16 @@
 ﻿using DuckHuntAPI.Models;
-using DuckHuntAPI.Repository.ObjectFactory;
+using DuckHuntAPI.ObjectFactory;
+using DuckHuntAPI.ObjectFactory;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DuckHuntAPI.Classes
+namespace DuckHuntAPI.ClassObjects
 {
     public class ImageObject : Image
     {
         public string url { get; set; }
-        private ImageObjectFactory Repository;
 
         public ImageObject(Image image) {
             this.id = image.id;

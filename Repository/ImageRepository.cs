@@ -10,8 +10,9 @@ namespace DuckHuntAPI.Models
     {
         protected readonly ISession _session;
 
-        public ImageRepository() {
-            _session = NHibernateHelper.GetSessionFactory().OpenSession();
+        public ImageRepository(ISession session)
+        {
+            this._session = session;
         }
 
         public List<Image> FindAllImages() {

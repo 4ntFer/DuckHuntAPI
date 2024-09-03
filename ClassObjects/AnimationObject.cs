@@ -1,26 +1,23 @@
 ﻿using DuckHuntAPI.Models;
+using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DuckHuntAPI.Classes
-{
+namespace DuckHuntAPI.ClassObjects { 
     public class AnimationObject : Animation
     {   
-        private List<ImageObject> Images; //TODO: DEFINIR GETTER
-        private AnimationObjectFactory Factory;
+        private List<ImageObject> Images; 
+        private AnimationObjectFactory ObjectFactory;
         
          public AnimationObject(Animation animation, AnimationObjectFactory Factory) {
             this.Id = animation.Id;
             this.Name = animation.Name;
             this.ImageSeqId = animation.ImageSeqId;
-            this.Factory = Factory;
+            this.ObjectFactory = Factory;
         }
-        //TODO: URL
-        //TODO: adicionar getter de images
-        //      Fazer LoadImages e getUrl para Images Object
 
         public List<ImageObject> GetImages() {
             if (Images == null) {
@@ -30,9 +27,8 @@ namespace DuckHuntAPI.Classes
             return Images;
         }
 
-        private List<ImageObject> LoadImageObjects() {
-            Images = Factory.GetImagesOf(this.Id);
-            return Images;
+        private void LoadImageObjects() {
+            Images = ObjectFactory.GetImagesOf(this.Id);
         }
     }
 }

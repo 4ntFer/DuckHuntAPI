@@ -12,8 +12,9 @@ namespace DuckHuntAPI.Repository
     {
         protected readonly ISession _session;
 
-        public AnimationRepository() {
-            _session = NHibernateHelper.GetSessionFactory().OpenSession();
+        public AnimationRepository(ISession session)
+        {
+            this._session = session;
         }
 
         public List<Animation> findByCharacter(int characterId) {
