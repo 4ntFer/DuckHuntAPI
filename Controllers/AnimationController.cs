@@ -1,5 +1,6 @@
-﻿using DuckHuntAPI.Classes;
+﻿using DuckHuntAPI.ClassObjects;
 using DuckHuntAPI.Models;
+using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,7 +16,14 @@ namespace DuckHuntAPI.Controllers
     {
         [HttpGet]
         public ActionResult Get() {
-            List<Animation> animationsBDList = new AnimationRepository().findAll();
+            AnimationRepository AnimationRepos = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
+            ImageSeqRepository ImgSeqRepos =  new ImageSeqRepository(NHibernateHelper.GetSession(HttpContext));
+            ImageRepository ImgRepos = new ImageRepository(NHibernateHelper.GetSession(HttpContext));
+            CharacterRepository characterRepository = new CharacterRepository(NHibernateHelper.GetSession(HttpContext));
+
+
+            AnimationObjectFactory Factory = new AnimationObjectFactory(ImgSeqRepos, ImgRepos);
+            List<Animation> animationsBDList = AnimationRepos.findAll();
             List<Dictionary<string, object>> animationsReturned;
 
             if (animationsBDList.Count != 0)
@@ -23,11 +31,17 @@ namespace DuckHuntAPI.Controllers
                 animationsReturned = new List<Dictionary<string, object>>();
                 foreach (Animation abd in animationsBDList)
                 {   
+                    AnimationObject aobj = new AnimationObject(abd, Factory);
                     Dictionary<string, object> ar = new Dictionary<string, object>();
+                    List<string> imgUrlList = new List<string>();
 
                     ar["Name"] = abd.Name;
-                    ar["CharacterName"] = new CharacterRepository().FindById(abd.CharacterId).name;
-                    ar["Images"] = new AnimationObject(abd).GetImageUrlList();
+                    ar["CharacterName"] = characterRepository.FindById(abd.CharacterId).name;
+                    ar["Images"] = imgUrlList;
+
+                    foreach (ImageObject imgobj in aobj.GetImages()) {
+                        imgUrlList.Add(imgobj.url);
+                    }
 
                     animationsReturned.Add(ar);
                 }
@@ -36,5 +50,29 @@ namespace DuckHuntAPI.Controllers
 
             return null;
         }
+
+       [HttpGet]
+       [Route("{name}")]
+       public IActionResult Get(string name)
+       {
+            AnimationRepository animationRepository = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
+            AnimationObjectFactory animationFactory = new AnimationObjectFactory(HttpContext);
+            Animation animation = animationRepository.findByName(name);
+            AnimationObject animationObject;
+
+            if (animation != null) {
+                animationObject = new AnimationObject(animationRepository.findByName(name), animationFactory);
+                List<string> imgList = new List<string>();
+                foreach (ImageObject img in animationObject.GetImages())
+                {
+                    imgList.Add(img.url);
+                }
+
+                return Ok(imgList);
+            }
+
+
+            return BadRequest("Animation does not exist.");
+       }
     }
 }

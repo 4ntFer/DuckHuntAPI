@@ -1,5 +1,6 @@
 ﻿using DuckHuntAPI.Models;
 using NHibernate;
+using NHibernate.Criterion;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,9 @@ namespace DuckHuntAPI.Repository
     {
         private readonly ISession _session;
 
-        public ImageSeqRepository() {
-            _session = NHibernateHelper.GetSessionFactory().OpenSession();
+        public ImageSeqRepository(ISession session)
+        {
+            this._session = session;
         }
 
         public List<ImageSeq> findAll() {
@@ -24,9 +26,9 @@ namespace DuckHuntAPI.Repository
             return _session.Query<ImageSeq>().Where(imgseq=> imgseq.Id == id).ToList();
         }
 
-        public List<ImageSeq> findByAnimation(int id)
-        {
-            return _session.Query<ImageSeq>().ToList()/*.Where(imgseq => imgseq.AnimationId == id).OrderBy(imgseq => imgseq.ImageId).ToList() */;
+        public List<ImageSeq> FindByAnimarionId(int AnimationId) {
+            return this._session.Query<ImageSeq>().Where(imgseq => imgseq.AnimationId == AnimationId).OrderBy(imgseq => imgseq.ImageId).ToList();
         }
+
     }
 }

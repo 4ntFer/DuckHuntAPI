@@ -13,9 +13,13 @@ namespace DuckHuntAPI.Controllers
     {
         [HttpGet]
         public Character Get(int id) {
-            CharacterRepository characterRepository = new CharacterRepository();
 
-            return characterRepository.FindById(id);
+            //NHibernateHelper.OpenSession(HttpContext);
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            Character character = new CharacterRepository(session).FindById(id);
+            //NHibernateHelper.CloseSession(HttpContext);
+
+            return character;
         }
     }
 }

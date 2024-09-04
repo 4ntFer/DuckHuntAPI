@@ -10,10 +10,11 @@ namespace DuckHuntAPI.Repository
 {
     public class AnimationRepository
     {
-        private readonly ISession _session;
+        protected readonly ISession _session;
 
-        public AnimationRepository() {
-            _session = NHibernateHelper.GetSessionFactory().OpenSession();
+        public AnimationRepository(ISession session)
+        {
+            this._session = session;
         }
 
         public List<Animation> findByCharacter(int characterId) {
@@ -23,6 +24,17 @@ namespace DuckHuntAPI.Repository
         public List<Animation> findAll()
         {
             return _session.Query<Animation>().ToList();
+        }
+
+        public Animation findByName(string AnimationName) {
+
+            try
+            {
+                return _session.Query<Animation>().Where(a => a.Name.ToLower() == AnimationName.ToLower()).First();
+            }
+            catch {
+                return null;
+            }
         }
     }
 }

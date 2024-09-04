@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
-    public class CharacterRepository : ICharacterRepository
+    public class CharacterRepository
     {
         private readonly ISession session;
-        public CharacterRepository() {
-            session = NHibernateHelper.GetSessionFactory().OpenSession();
+        public CharacterRepository(ISession session) {
+            this.session = session;
         }
         public Character FindById(int id)
         {
