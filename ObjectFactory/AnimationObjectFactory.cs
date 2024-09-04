@@ -1,6 +1,7 @@
 ﻿using DuckHuntAPI.ClassObjects;
 using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,11 @@ namespace DuckHuntAPI.ObjectFactory
         public AnimationObjectFactory(ImageSeqRepository ImgSeqRepos, ImageRepository ImgRepos) {
             this.ImgSeqRepos = ImgSeqRepos;
             this.ImgRepos = ImgRepos;
+        }
+
+        public AnimationObjectFactory(HttpContext context) {
+            ImgRepos = new ImageRepository(NHibernateHelper.GetSession(context));
+            ImgSeqRepos = new ImageSeqRepository(NHibernateHelper.GetSession(context));
         }
         public List<ImageObject> GetImagesOf(int AnimationId) {
             List<ImageObject> ImgObjList;
