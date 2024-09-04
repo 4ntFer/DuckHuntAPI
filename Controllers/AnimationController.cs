@@ -14,7 +14,6 @@ namespace DuckHuntAPI.Controllers
     [Route("Animation")]
     public class AnimationController : Controller
     {
-
         [HttpGet]
         public ActionResult Get() {
             AnimationRepository AnimationRepos = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
@@ -51,5 +50,29 @@ namespace DuckHuntAPI.Controllers
 
             return null;
         }
+
+       [HttpGet]
+       [Route("{name}")]
+       public IActionResult Get(string name)
+       {
+            AnimationRepository animationRepository = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
+            AnimationObjectFactory animationFactory = new AnimationObjectFactory(HttpContext);
+            Animation animation = animationRepository.findByName(name);
+            AnimationObject animationObject;
+
+            if (animation != null) {
+                animationObject = new AnimationObject(animationRepository.findByName(name), animationFactory);
+                List<string> imgList = new List<string>();
+                foreach (ImageObject img in animationObject.GetImages())
+                {
+                    imgList.Add(img.url);
+                }
+
+                return Ok(imgList);
+            }
+
+
+            return BadRequest("Animation does not exist.");
+       }
     }
 }
