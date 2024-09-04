@@ -9,7 +9,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.ObjectFactory
 {
-
+    // <summary>
+    // Class <c>AnimationObjectFactory<c> CharacterAnimation's properties builder. The buid is make through the repositories.
+    // </summary>
     public class AnimationObjectFactory
     {
         private ImageSeqRepository ImgSeqRepos;

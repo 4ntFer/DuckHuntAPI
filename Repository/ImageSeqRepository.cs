@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Repository
 {
+    // <summary>
+    // Class <c>ImageSeqRepository<c> class responsible for provides access ImageSeq's table registers.
+    // </summary>
     public class ImageSeqRepository
     {
         private readonly ISession _session;

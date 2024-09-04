@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI
 {
+    // <summary>
+    // Class <c>NHibernateHelper<c> Manages NHibernate's sessions objects.
+    // </summary>
     public class EventsMiddleware
     {
         private readonly RequestDelegate _next;

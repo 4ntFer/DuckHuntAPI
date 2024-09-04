@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.ObjectFactory
 {
+    // <summary>
+    // Class <c>CharacterObjectFactory<c> CharacterObject's properties builder. The buid is make through the repositories.
+    // </summary>
     public class CharacterObjectFactory
     {
         private CharacterRepository characterRepository;
@@ -20,6 +23,9 @@ namespace DuckHuntAPI.ObjectFactory
             this.animationObjectFactory = animationObjectFactory;
         }
 
+        // <summary>
+        // Method <c>GetAnimation<c> Returns Character's AnimationObject by Character's id.
+        // </summary>
         public List<AnimationObject> GetAnimations(int id) {
             List<AnimationObject> result = new List<AnimationObject>();
             List<Animation> animations = animationRepository.findAll();

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.ObjectFactory
 {
-    //Factory nunca deve instanciar outros repositorios, pois isso segnificaria abrir varios sessões
-    //Provê atributos do Objeto ImageObject
+    // <summary>
+    // Class <c>AnimationObjectFactory<c> CharacterAnimation's properties builder. The buid is make through the repositories.
+    // </summary>
     public class ImageObjectFactory
     {
         private ImageRepository ImgRepos;

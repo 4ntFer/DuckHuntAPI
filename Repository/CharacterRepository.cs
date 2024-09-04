@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
+    // <summary>
+    // Class <c>CharacterRepository<c> class responsible for provides access Character's table registers.
+    // </summary>
     public class CharacterRepository
     {
         private readonly ISession session;
