@@ -1,4 +1,7 @@
-﻿using DuckHuntAPI.Models;
+﻿using DuckHuntAPI.ClassObjects;
+using DuckHuntAPI.Models;
+using DuckHuntAPI.ObjectFactory;
+using DuckHuntAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -43,11 +46,25 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         [Route("ByCharacter/{CharacterName}")]
         public IActionResult GetByCharacter(string CharacterName) {
-            //Character c = new CharacterRepository().FindByName(CharacterName);
+            CharacterRepository characterRepository = new CharacterRepository(NHibernateHelper.GetSession(HttpContext));
+            AnimationRepository animationRepository = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
+            ImageSeqRepository imgSeqRepository = new ImageSeqRepository(NHibernateHelper.GetSession(HttpContext));
+            ImageRepository imgRepository = new ImageRepository(NHibernateHelper.GetSession(HttpContext));
 
-            //if (c != null) {
-                //TODO
-            //}
+            AnimationObjectFactory animationFactory = new AnimationObjectFactory(imgSeqRepository, imgRepository);
+            CharacterObjectFactory charFactory = new CharacterObjectFactory(characterRepository, animationRepository, animationFactory);
+            CharacterObject c = new CharacterObject(characterRepository.FindByName(CharacterName), charFactory);
+
+            if (c != null) {
+                List<string> result = new List<string>();
+                foreach (AnimationObject a in c.GetAnimations()) {
+                    foreach (ImageObject i in a.GetImages()) {
+                        result.Add(i.url);
+                    }
+                }
+
+                return Ok(result);
+            }
 
             return BadRequest();
         }
