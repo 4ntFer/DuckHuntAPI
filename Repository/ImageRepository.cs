@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
+    // <summary>
+    // Class <c>ImageRepository<c> class responsible for provides access Image's table registers.
+    // </summary>
     public class ImageRepository
     {
         protected readonly ISession _session;

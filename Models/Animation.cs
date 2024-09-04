@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
+    // <summary>
+    // Class <c>Animation<c> correspondent database Animation's Table.
+    // </summary>
     public class Animation
     {
         public virtual int Id { get; set; }

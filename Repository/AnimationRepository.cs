@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Repository
 {
+    // <summary>
+    // Class <c>AnimationRepository<c> class responsible for provides access Animation's table registers.
+    // </summary>
     public class AnimationRepository
     {
         protected readonly ISession _session;

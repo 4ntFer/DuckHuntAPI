@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
+    // <summary>
+    // Class <c>ImageSeq<c> correspondent database ImageSeq's Table.
+    // </summary>
     public class ImageSeq
     {
         public virtual int Id { get; set; }

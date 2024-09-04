@@ -10,6 +10,9 @@ using Microsoft.AspNetCore.Http;
 
 namespace DuckHuntAPI
 {
+    // <summary>
+    // Class <c>NHibernateHelper<c> Responsible for provides NHibernate's sessions objects.
+    // </summary>
     public class NHibernateHelper
     {
         private const string CurrentSessionKey = "nhibernate.current_session";
@@ -24,22 +27,34 @@ namespace DuckHuntAPI
             return _sessionFactory;
         }
 
+        // <summary>
+        // Method <c>OpenSession<c> Open session and associetes with HTTP context.
+        // </summary>
         public static void OpenSession(HttpContext context) {
             ISession session = NHibernateHelper.GetSessionFactory().OpenSession();
             SetSession(session, context);
         }
 
+        // <summary>
+        // Method <c>CloseSession<c> Close session and desassocietes from HTTP context.
+        // </summary>
         public static void CloseSession(HttpContext context) {
             ISession session = NHibernateHelper.GetSession(context);
             SetSession(null, context);
             session.Close();
         }
 
+        // <summary>
+        // Method <c>GetSession<c> Returns session from HTTP context.
+        // </summary>
         public static ISession GetSession(HttpContext context) {
 
             return (ISession)context.Items[SESSION_KEY];
         }
 
+        // <summary>
+        // Method <c>SetSession<c> Associates session with HTTP context.
+        // </summary>
         private static void SetSession(ISession session, HttpContext context) {
             if (session != null)
             {

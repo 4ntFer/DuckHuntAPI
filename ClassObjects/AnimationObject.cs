@@ -6,7 +6,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DuckHuntAPI.ClassObjects { 
+namespace DuckHuntAPI.ClassObjects {
+    /// <summary>
+    /// Class <c>AnimationObject</c> models a database desassociated animation representation.
+    /// </summary>
     public class AnimationObject : Animation
     {   
         private List<ImageObject> Images; 
@@ -17,8 +20,11 @@ namespace DuckHuntAPI.ClassObjects {
             this.Name = animation.Name;
             this.ImageSeqId = animation.ImageSeqId;
             this.ObjectFactory = Factory;
-        }
+         }
 
+        /// <summary>
+        /// Method <c>GetImages</c> returns images of animations. If this method is naver invoked, images are never loaded in memory for this object.
+        /// </summary>
         public List<ImageObject> GetImages() {
             if (Images == null) {
                 LoadImageObjects();
