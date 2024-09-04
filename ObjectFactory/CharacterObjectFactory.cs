@@ -10,18 +10,22 @@ namespace DuckHuntAPI.ObjectFactory
 {
     public class CharacterObjectFactory
     {
-        private CharacterRepository CharacterRepos;
-        private AnimationRepository AnimationRepos;
-        private AnimationObjectFactory AnimationFactory;
+        private CharacterRepository characterRepository;
+        private AnimationRepository animationRepository;
+        private AnimationObjectFactory animationObjectFactory;
 
-        
+        public CharacterObjectFactory(CharacterRepository characterRepository, AnimationRepository animationRepository, AnimationObjectFactory animationObjectFactory) {
+            this.characterRepository = characterRepository;
+            this.animationRepository = animationRepository;
+            this.animationObjectFactory = animationObjectFactory;
+        }
 
         public List<AnimationObject> GetAnimations(int id) {
             List<AnimationObject> result = new List<AnimationObject>();
-            List<Animation> animations = AnimationRepos.findAll();
+            List<Animation> animations = animationRepository.findAll();
 
             foreach (Animation a in animations) {
-                result.Add(new AnimationObject(a, AnimationFactory));
+                result.Add(new AnimationObject(a, animationObjectFactory));
             }
             return result;
         }
