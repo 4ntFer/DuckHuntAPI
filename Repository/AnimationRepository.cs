@@ -25,5 +25,16 @@ namespace DuckHuntAPI.Repository
         {
             return _session.Query<Animation>().ToList();
         }
+
+        public Animation findByName(string AnimationName) {
+
+            try
+            {
+                return _session.Query<Animation>().Where(a => a.Name.ToLower() == AnimationName.ToLower()).First();
+            }
+            catch {
+                return null;
+            }
+        }
     }
 }
