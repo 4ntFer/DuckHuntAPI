@@ -2,6 +2,7 @@
 using DuckHuntAPI.Models;
 using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
+using DuckHuntAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,15 +18,10 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         public ActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
-            CharacterRepository characterRepository = new CharacterRepository(session);
-            ImageRepository imageRepository = new ImageRepository(session);
-            ImageSeqRepository imageSeqRepository = new ImageSeqRepository(session);
-            AnimationRepository animationRepository = new AnimationRepository(session);
-
-            AnimationObjectFactory animationObjectFactory = new AnimationObjectFactory(imageSeqRepository, imageRepository);
-            CharacterObjectFactory characterObjectFactory = new CharacterObjectFactory(characterRepository, animationRepository, animationObjectFactory);
-            CharacterObject characterObject = new CharacterObject(characterRepository.FindById(id), characterObjectFactory);
+            CharacterObject characterObject = new CharacterObject(supplier.characterRepository.FindById(id),
+                                                                  supplier.characterObjectFactory);
 
             Dictionary<string, object> result = new Dictionary<string, object>();
             List<Dictionary<string, object>> AnimationsInResult = new List<Dictionary<string, object>>();
