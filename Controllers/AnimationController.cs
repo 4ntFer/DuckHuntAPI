@@ -2,6 +2,7 @@
 using DuckHuntAPI.Models;
 using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
+using DuckHuntAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,14 +17,13 @@ namespace DuckHuntAPI.Controllers
     {
         [HttpGet]
         public ActionResult Get() {
-            AnimationRepository AnimationRepos = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
-            ImageSeqRepository ImgSeqRepos =  new ImageSeqRepository(NHibernateHelper.GetSession(HttpContext));
-            ImageRepository ImgRepos = new ImageRepository(NHibernateHelper.GetSession(HttpContext));
-            CharacterRepository characterRepository = new CharacterRepository(NHibernateHelper.GetSession(HttpContext));
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
+            CharacterRepository characterRepository = supplier.characterRepository;
+            AnimationObjectFactory Factory = supplier.animationObjectFactory;
 
-            AnimationObjectFactory Factory = new AnimationObjectFactory(ImgSeqRepos, ImgRepos);
-            List<Animation> animationsBDList = AnimationRepos.findAll();
+            List<Animation> animationsBDList = supplier.animationRepository.findAll();
             List<Dictionary<string, object>> animationsReturned;
 
             if (animationsBDList.Count != 0)
@@ -55,8 +55,12 @@ namespace DuckHuntAPI.Controllers
        [Route("{name}")]
        public IActionResult Get(string name)
        {
-            AnimationRepository animationRepository = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
-            AnimationObjectFactory animationFactory = new AnimationObjectFactory(HttpContext);
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
+
+            AnimationRepository animationRepository = supplier.animationRepository;
+            AnimationObjectFactory animationFactory = supplier.animationObjectFactory;
+
             Animation animation = animationRepository.findByName(name);
             AnimationObject animationObject;
 
