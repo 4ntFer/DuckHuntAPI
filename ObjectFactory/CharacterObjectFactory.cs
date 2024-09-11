@@ -28,7 +28,7 @@ namespace DuckHuntAPI.ObjectFactory
         // </summary>
         public List<AnimationObject> GetAnimations(int id) {
             List<AnimationObject> result = new List<AnimationObject>();
-            List<Animation> animations = animationRepository.findAll();
+            List<Animation> animations = animationRepository.findByCharacter(id);
 
             foreach (Animation a in animations) {
                 result.Add(new AnimationObject(a, animationObjectFactory));
