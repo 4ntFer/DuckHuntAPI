@@ -15,6 +15,7 @@ namespace DuckHuntAPI.ClassObjects {
         private List<ImageObject> Images; 
         private AnimationObjectFactory ObjectFactory;
         
+        //TODO: Remover construtor e fazer método que monta o objeto no factory
          public AnimationObject(Animation animation, AnimationObjectFactory Factory) {
             this.Id = animation.Id;
             this.Name = animation.Name;

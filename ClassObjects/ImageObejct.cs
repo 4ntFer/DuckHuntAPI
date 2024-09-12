@@ -14,6 +14,7 @@ namespace DuckHuntAPI.ClassObjects
     {
         public string url { get; set; }
 
+        //TODO: Remover construtor e fazer método que monta o objeto no factory
         public ImageObject(Image image) {
             this.id = image.id;
             this.data = image.data;
