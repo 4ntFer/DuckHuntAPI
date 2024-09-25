@@ -10,12 +10,12 @@ namespace DuckHuntAPI.ClassObjects
     /// <summary>
     /// Class <c>ImageObject</c> models a database desassociated image representation.
     /// </summary>
-    public class ImageObject : Image
+    public class ImageGameObject : Image
     {
         public string url { get; set; }
 
         //TODO: Remover construtor e fazer método que monta o objeto no factory
-        public ImageObject(Image image) {
+        public ImageGameObject(Image image) {
             this.id = image.id;
             this.data = image.data;
             this.url = Environment.SOURCE_URL + "/image/" + this.id;

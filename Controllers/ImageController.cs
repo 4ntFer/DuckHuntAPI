@@ -51,14 +51,14 @@ namespace DuckHuntAPI.Controllers
             ImageSeqRepository imgSeqRepository = new ImageSeqRepository(NHibernateHelper.GetSession(HttpContext));
             ImageRepository imgRepository = new ImageRepository(NHibernateHelper.GetSession(HttpContext));
 
-            AnimationObjectFactory animationFactory = new AnimationObjectFactory(imgSeqRepository, imgRepository);
-            CharacterObjectFactory charFactory = new CharacterObjectFactory(characterRepository, animationRepository, animationFactory);
-            CharacterObject c = new CharacterObject(characterRepository.FindByName(CharacterName), charFactory);
+            AnimationGameObjectAttributesBuilder animationFactory = new AnimationGameObjectAttributesBuilder(imgSeqRepository, imgRepository);
+            CharacterGameObjectAttributesBuilder charFactory = new CharacterGameObjectAttributesBuilder(characterRepository, animationRepository, animationFactory);
+            CharacterGameObject c = new CharacterGameObject(characterRepository.FindByName(CharacterName), charFactory);
 
             if (c != null) {
                 List<string> result = new List<string>();
-                foreach (AnimationObject a in c.GetAnimations()) {
-                    foreach (ImageObject i in a.GetImages()) {
+                foreach (AnimationGameObject a in c.GetAnimations()) {
+                    foreach (ImageGameObject i in a.GetImages()) {
                         result.Add(i.url);
                     }
                 }

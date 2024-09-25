@@ -24,9 +24,9 @@ namespace DuckHuntAPI.Utils
         private ImageRepository _imageRepository;
         private ImageSeqRepository _imageSeqRepository;
 
-        private AnimationObjectFactory _animationObjectFactory;
-        private CharacterObjectFactory _characterObjectFactory;
-        private ImageObjectFactory _imageObjectFactory;
+        private AnimationGameObjectAttributesBuilder _animationObjectFactory;
+        private CharacterGameObjectAttributesBuilder _characterObjectFactory;
+        private ImageGameObjectAttributesBuilder _imageObjectFactory;
 
 
         public AnimationRepository animationRepository { get { return GetAnimationRepository(); } }
@@ -34,9 +34,9 @@ namespace DuckHuntAPI.Utils
         public ImageRepository imageRepository { get { return GetImageRepository();  } }
         public ImageSeqRepository imageSeqRepository { get { return GetImageSeqRepository(); } }
 
-        public AnimationObjectFactory animationObjectFactory { get { return GetAnimationObjectFactory(); } }
-        public CharacterObjectFactory characterObjectFactory { get { return GetCharacterObjectFactory(); } }
-        public ImageObjectFactory imageObjectFactory { get { return GetImageObjectFactory(); } }
+        public AnimationGameObjectAttributesBuilder animationObjectFactory { get { return GetAnimationObjectFactory(); } }
+        public CharacterGameObjectAttributesBuilder characterObjectFactory { get { return GetCharacterObjectFactory(); } }
+        public ImageGameObjectAttributesBuilder imageObjectFactory { get { return GetImageObjectFactory(); } }
 
         public RepositoryAndObjectFactorySupplier(ISession session) {
             this._session = session;
@@ -83,25 +83,25 @@ namespace DuckHuntAPI.Utils
             return _imageSeqRepository;
         }
 
-        private ImageObjectFactory GetImageObjectFactory() {
+        private ImageGameObjectAttributesBuilder GetImageObjectFactory() {
             if (_imageObjectFactory == null) {
-                _imageObjectFactory = new ImageObjectFactory(imageRepository);
+                _imageObjectFactory = new ImageGameObjectAttributesBuilder(imageRepository);
             }
 
             return _imageObjectFactory;
         }
 
-        private AnimationObjectFactory GetAnimationObjectFactory () {
+        private AnimationGameObjectAttributesBuilder GetAnimationObjectFactory () {
             if (_animationObjectFactory == null) {
-                _animationObjectFactory = new AnimationObjectFactory(imageSeqRepository, imageRepository);
+                _animationObjectFactory = new AnimationGameObjectAttributesBuilder(imageSeqRepository, imageRepository);
             }
 
             return _animationObjectFactory;
         }
 
-        private CharacterObjectFactory GetCharacterObjectFactory() {
+        private CharacterGameObjectAttributesBuilder GetCharacterObjectFactory() {
             if (_characterObjectFactory == null) {
-                _characterObjectFactory = new CharacterObjectFactory(characterRepository, animationRepository, animationObjectFactory);
+                _characterObjectFactory = new CharacterGameObjectAttributesBuilder(characterRepository, animationRepository, animationObjectFactory);
             }
 
             return _characterObjectFactory;

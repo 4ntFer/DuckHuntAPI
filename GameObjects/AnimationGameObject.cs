@@ -10,23 +10,23 @@ namespace DuckHuntAPI.ClassObjects {
     /// <summary>
     /// Class <c>AnimationObject</c> models a database desassociated animation representation.
     /// </summary>
-    public class AnimationObject : Animation
+    public class AnimationGameObject : Animation
     {   
-        private List<ImageObject> Images; 
-        private AnimationObjectFactory ObjectFactory;
+        private List<ImageGameObject> Images; 
+        private AnimationGameObjectAttributesBuilder AttributesBuilder;
         
         //TODO: Remover construtor e fazer método que monta o objeto no factory
-         public AnimationObject(Animation animation, AnimationObjectFactory Factory) {
+         public AnimationGameObject(Animation animation, AnimationGameObjectAttributesBuilder Factory) {
             this.Id = animation.Id;
             this.Name = animation.Name;
             this.ImageSeqId = animation.ImageSeqId;
-            this.ObjectFactory = Factory;
+            this.AttributesBuilder = Factory;
          }
 
         /// <summary>
         /// Method <c>GetImages</c> returns images of animations. If this method is naver invoked, images are never loaded in memory for this object.
         /// </summary>
-        public List<ImageObject> GetImages() {
+        public List<ImageGameObject> GetImages() {
             if (Images == null) {
                 LoadImageObjects();
             }
@@ -35,7 +35,7 @@ namespace DuckHuntAPI.ClassObjects {
         }
 
         private void LoadImageObjects() {
-            Images = ObjectFactory.GetImagesOf(this.Id);
+            Images = AttributesBuilder.BuildImagesOf(this.Id);
         }
     }
 }

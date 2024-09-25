@@ -20,7 +20,7 @@ namespace DuckHuntAPI.Controllers
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
-            CharacterObject characterObject = new CharacterObject(supplier.characterRepository.FindById(id),
+            CharacterGameObject characterObject = new CharacterGameObject(supplier.characterRepository.FindById(id),
                                                                   supplier.characterObjectFactory);
 
             Dictionary<string, object> result = new Dictionary<string, object>();
@@ -30,7 +30,7 @@ namespace DuckHuntAPI.Controllers
             result.Add("Name", characterObject.name);
             result.Add("Animations", AnimationsInResult);
 
-            foreach(AnimationObject a in characterObject.GetAnimations()) {
+            foreach(AnimationGameObject a in characterObject.GetAnimations()) {
                 //id
                 //name
                 //images
@@ -43,7 +43,7 @@ namespace DuckHuntAPI.Controllers
                 animationInResult.Add("Name", a.Name);
                 animationInResult.Add("Images", imageUrlList);
 
-                foreach (ImageObject i in a.GetImages()) {
+                foreach (ImageGameObject i in a.GetImages()) {
                     imageUrlList.Add(i.url);
                 }
             }

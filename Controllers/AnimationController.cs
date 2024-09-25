@@ -21,7 +21,7 @@ namespace DuckHuntAPI.Controllers
             RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
             CharacterRepository characterRepository = supplier.characterRepository;
-            AnimationObjectFactory Factory = supplier.animationObjectFactory;
+            AnimationGameObjectAttributesBuilder Factory = supplier.animationObjectFactory;
 
             List<Animation> animationsBDList = supplier.animationRepository.findAll();
             List<Dictionary<string, object>> animationsReturned;
@@ -31,7 +31,7 @@ namespace DuckHuntAPI.Controllers
                 animationsReturned = new List<Dictionary<string, object>>();
                 foreach (Animation abd in animationsBDList)
                 {   
-                    AnimationObject aobj = new AnimationObject(abd, Factory);
+                    AnimationGameObject aobj = new AnimationGameObject(abd, Factory);
                     Dictionary<string, object> ar = new Dictionary<string, object>();
                     List<string> imgUrlList = new List<string>();
 
@@ -39,7 +39,7 @@ namespace DuckHuntAPI.Controllers
                     ar["CharacterName"] = characterRepository.FindById(abd.CharacterId).name;
                     ar["Images"] = imgUrlList;
 
-                    foreach (ImageObject imgobj in aobj.GetImages()) {
+                    foreach (ImageGameObject imgobj in aobj.GetImages()) {
                         imgUrlList.Add(imgobj.url);
                     }
 
@@ -59,15 +59,15 @@ namespace DuckHuntAPI.Controllers
             RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
             AnimationRepository animationRepository = supplier.animationRepository;
-            AnimationObjectFactory animationFactory = supplier.animationObjectFactory;
+            AnimationGameObjectAttributesBuilder animationFactory = supplier.animationObjectFactory;
 
             Animation animation = animationRepository.findByName(name);
-            AnimationObject animationObject;
+            AnimationGameObject animationObject;
 
             if (animation != null) {
-                animationObject = new AnimationObject(animationRepository.findByName(name), animationFactory);
+                animationObject = new AnimationGameObject(animationRepository.findByName(name), animationFactory);
                 List<string> imgList = new List<string>();
-                foreach (ImageObject img in animationObject.GetImages())
+                foreach (ImageGameObject img in animationObject.GetImages())
                 {
                     imgList.Add(img.url);
                 }

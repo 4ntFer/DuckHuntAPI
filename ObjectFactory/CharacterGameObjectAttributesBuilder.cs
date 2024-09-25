@@ -1,23 +1,20 @@
 ﻿using DuckHuntAPI.ClassObjects;
 using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DuckHuntAPI.ObjectFactory
 {
     // <summary>
     // Class <c>CharacterObjectFactory<c> CharacterObject's properties builder. The buid is make through the repositories.
     // </summary>
-    public class CharacterObjectFactory
+    public class CharacterGameObjectAttributesBuilder
     {
         private CharacterRepository characterRepository;
         private AnimationRepository animationRepository;
-        private AnimationObjectFactory animationObjectFactory;
+        private AnimationGameObjectAttributesBuilder animationObjectFactory;
 
-        public CharacterObjectFactory(CharacterRepository characterRepository, AnimationRepository animationRepository, AnimationObjectFactory animationObjectFactory) {
+        public CharacterGameObjectAttributesBuilder(CharacterRepository characterRepository, AnimationRepository animationRepository, AnimationGameObjectAttributesBuilder animationObjectFactory) {
             this.characterRepository = characterRepository;
             this.animationRepository = animationRepository;
             this.animationObjectFactory = animationObjectFactory;
@@ -26,12 +23,12 @@ namespace DuckHuntAPI.ObjectFactory
         // <summary>
         // Method <c>GetAnimation<c> Returns Character's AnimationObject by Character's id.
         // </summary>
-        public List<AnimationObject> GetAnimations(int id) {
-            List<AnimationObject> result = new List<AnimationObject>();
+        public List<AnimationGameObject> BuildAnimationsOf(int id) {
+            List<AnimationGameObject> result = new List<AnimationGameObject>();
             List<Animation> animations = animationRepository.findByCharacter(id);
 
             foreach (Animation a in animations) {
-                result.Add(new AnimationObject(a, animationObjectFactory));
+                result.Add(new AnimationGameObject(a, animationObjectFactory));
             }
             return result;
         }
