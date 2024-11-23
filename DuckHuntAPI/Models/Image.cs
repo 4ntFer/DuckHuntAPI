@@ -12,6 +12,6 @@ namespace DuckHuntAPI.Models
     {
         public virtual int id { get; set; }
         public virtual Byte[] data { get; set; }
-        public virtual Character Character { get; set; }
+        public virtual Character character { get; set; }
     }
 }
