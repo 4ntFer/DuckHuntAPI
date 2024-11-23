@@ -16,7 +16,7 @@ namespace DuckHuntAPI
     public class NHibernateHelper
     {
         private const string CurrentSessionKey = "nhibernate.current_session";
-        private const string SESSION_KEY = "MPS.NHibernate.SESSION_KEY";
+        private const string SESSION_KEY = "NHibernate.SESSION_KEY";
         private static ISessionFactory _sessionFactory = null;
 
         public static ISessionFactory GetSessionFactory() {

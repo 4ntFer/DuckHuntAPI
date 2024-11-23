@@ -18,35 +18,6 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         public ActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
-            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
-
-            CharacterGameObject characterObject = new CharacterGameObject(supplier.characterRepository.FindById(id),
-                                                                  supplier.characterObjectFactory);
-
-            Dictionary<string, object> result = new Dictionary<string, object>();
-            List<Dictionary<string, object>> AnimationsInResult = new List<Dictionary<string, object>>();
-
-            result.Add("Id", characterObject.id);
-            result.Add("Name", characterObject.name);
-            result.Add("Animations", AnimationsInResult);
-
-            foreach(AnimationGameObject a in characterObject.GetAnimations()) {
-                //id
-                //name
-                //images
-                Dictionary<string, object> animationInResult = new Dictionary<string, object>();
-                List<string> imageUrlList = new List<string>();
-
-                AnimationsInResult.Add(animationInResult);
-
-                animationInResult.Add("Id", a.Id);
-                animationInResult.Add("Name", a.Name);
-                animationInResult.Add("Images", imageUrlList);
-
-                foreach (ImageGameObject i in a.GetImages()) {
-                    imageUrlList.Add(i.url);
-                }
-            }
 
             return Ok(result);
         }

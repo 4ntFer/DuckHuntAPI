@@ -46,25 +46,6 @@ namespace DuckHuntAPI.Controllers
         [HttpGet]
         [Route("ByCharacter/{CharacterName}")]
         public IActionResult GetByCharacter(string CharacterName) {
-            CharacterRepository characterRepository = new CharacterRepository(NHibernateHelper.GetSession(HttpContext));
-            AnimationRepository animationRepository = new AnimationRepository(NHibernateHelper.GetSession(HttpContext));
-            ImageSeqRepository imgSeqRepository = new ImageSeqRepository(NHibernateHelper.GetSession(HttpContext));
-            ImageRepository imgRepository = new ImageRepository(NHibernateHelper.GetSession(HttpContext));
-
-            AnimationGameObjectAttributesBuilder animationFactory = new AnimationGameObjectAttributesBuilder(imgSeqRepository, imgRepository);
-            CharacterGameObjectAttributesBuilder charFactory = new CharacterGameObjectAttributesBuilder(characterRepository, animationRepository, animationFactory);
-            CharacterGameObject c = new CharacterGameObject(characterRepository.FindByName(CharacterName), charFactory);
-
-            if (c != null) {
-                List<string> result = new List<string>();
-                foreach (AnimationGameObject a in c.GetAnimations()) {
-                    foreach (ImageGameObject i in a.GetImages()) {
-                        result.Add(i.url);
-                    }
-                }
-
-                return Ok(result);
-            }
 
             return BadRequest();
         }
