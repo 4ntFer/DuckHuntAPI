@@ -1,6 +1,4 @@
-﻿using DuckHuntAPI.ClassObjects;
-using DuckHuntAPI.Models;
-using DuckHuntAPI.ObjectFactory;
+﻿using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;

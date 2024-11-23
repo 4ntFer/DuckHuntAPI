@@ -12,6 +12,12 @@
         <property name="name">
             <column name="Name" length="255" not-null="false" />
         </property>
+		
+		<bag name="images"
+			 cascade="all-delete-orphan">
+			<key column="CharacterId"/>
+			<one-to-many class="Image"/>
+		</bag>
     </class>
 
 </hibernate-mapping>

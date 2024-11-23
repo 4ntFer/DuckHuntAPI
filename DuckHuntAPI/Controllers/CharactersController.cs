@@ -1,8 +1,6 @@
-﻿using DuckHuntAPI.ClassObjects;
+﻿
 using DuckHuntAPI.Models;
-using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
-using DuckHuntAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,7 +17,17 @@ namespace DuckHuntAPI.Controllers
         public ActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
 
-            return Ok(result);
+            return Ok(null);
+        }
+
+        [HttpGet]
+        [Route("{id}/images")]
+        public IActionResult GetCharacterImages(int id) {
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            CharacterRepository repository = new CharacterRepository(session);
+
+
+            return Ok(repository.FindById(id).images);
         }
     }
 }
