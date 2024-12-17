@@ -5,7 +5,7 @@
     <class name="Character" table="Character">
 
         <id name="id">
-            <column name="id" sql-type="int" not-null="false"/>
+            <column name="Id" sql-type="int" not-null="false"/>
             <generator class="uuid.hex" />
         </id>
 

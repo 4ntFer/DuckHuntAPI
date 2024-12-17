@@ -10,7 +10,7 @@
 		</id>
 
 		<property name="data">
-			<column name="Dado" sql-type="varbinary" not-null="false" />
+			<column name="Data" sql-type="varbinary" not-null="false" />
 		</property>
 		
 		<many-to-one
