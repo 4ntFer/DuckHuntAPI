@@ -8,7 +8,7 @@ namespace DuckHuntAPI.Models
     // <summary>
     // Class <c>ImageSeq<c> correspondent database ImageSeq's Table.
     // </summary>
-    public class ImageSeq
+    public class ImageSeq : Model
     {
         public virtual int Id { get; set; }
         public virtual int AnimationId { get; set; }
@@ -28,6 +28,11 @@ namespace DuckHuntAPI.Models
         public override int GetHashCode()
         {
             return (AnimationId + "|" + ImageIndex).GetHashCode();
+        }
+        //TODO
+        public override Dictionary<object, object> GetDTO()
+        {
+            throw new NotImplementedException();
         }
     }
 }

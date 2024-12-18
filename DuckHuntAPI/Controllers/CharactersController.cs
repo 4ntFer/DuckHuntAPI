@@ -14,18 +14,19 @@ namespace DuckHuntAPI.Controllers
     public class CharactersController : Controller
     {
         [HttpGet]
-        public ActionResult Get(int id) {
+        public IActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            CharacterRepository repository = new CharacterRepository(session);
+            Character c = repository.FindById(id);
 
-            return Ok(null);
+            return Ok(c.GetDTO());
         }
-
+        //TODO uso do DTO
         [HttpGet]
         [Route("{id}/images")]
         public IActionResult GetCharacterImages(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             CharacterRepository repository = new CharacterRepository(session);
-
 
             return Ok(repository.FindById(id).images);
         }

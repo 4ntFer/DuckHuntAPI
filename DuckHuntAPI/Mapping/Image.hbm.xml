@@ -12,6 +12,13 @@
 		<property name="data">
 			<column name="Data" sql-type="varbinary" not-null="false" />
 		</property>
+
+
+		<many-to-one
+			not-null="true"
+			name="character"
+			class="Character"
+			column="CharacterId"/>
 	</class>
 
 </hibernate-mapping>
