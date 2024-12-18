@@ -28,7 +28,7 @@ namespace DuckHuntAPI.Controllers
             CharacterRepository repository = new CharacterRepository(session);
             Character c = repository.FindById(id);
 
-            return Ok(c.GetDTO());
+            return BadRequest("Sem Implementação");
         }
         // Retorna as imagens do character filtrando por ID
         // TODO: uso do DTO
@@ -39,7 +39,7 @@ namespace DuckHuntAPI.Controllers
             CharacterRepository repository = new CharacterRepository(session);
             Character c = repository.FindById(id);
 
-            return Ok(c.GetDTO()["images"]);
+            return BadRequest("Sem Implementação");
         }
         // Retorna as animações do character filtrando por ID
         //TODO

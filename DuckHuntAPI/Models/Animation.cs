@@ -8,17 +8,12 @@ namespace DuckHuntAPI.Models
     // <summary>
     // Class <c>Animation<c> correspondent database Animation's Table.
     // </summary>
-    public class Animation : ModelTranferable
+    public class Animation
     {
         public virtual int Id { get; set; }
         public virtual int CharacterId {get; set;}
         public virtual string Name { get; set; }
         public virtual int ImageSeqId { get; set; }
 
-        // TODO
-        public override Dictionary<object, object> GetDTO()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
