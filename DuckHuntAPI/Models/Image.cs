@@ -8,7 +8,7 @@ namespace DuckHuntAPI.Models
     // <summary>
     // Class <c>Image<c> correspondent database Images's Table.
     // </summary>
-    public class Image : Model
+    public class Image : ModelTranferable
     {
         public virtual int id { get; set; }
         public virtual Byte[] data { get; set; }

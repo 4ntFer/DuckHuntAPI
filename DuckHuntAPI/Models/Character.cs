@@ -8,7 +8,7 @@ namespace DuckHuntAPI.Models
     // <summary>
     // Class <c>Character<c> correspondent database Character's Table.
     // </summary>
-    public class Character : Model
+    public class Character : ModelTranferable
     {
         public virtual int id { get; set; }
         public virtual string name { get; set; }
@@ -29,7 +29,7 @@ namespace DuckHuntAPI.Models
             }
 
             result.Add("images", resultImages);
-            return result;
+            return
         }
     }
 }
