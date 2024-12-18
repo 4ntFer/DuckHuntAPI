@@ -29,7 +29,7 @@ namespace DuckHuntAPI.Models
             }
 
             result.Add("images", resultImages);
-            return
+            return result;
         }
     }
 }
