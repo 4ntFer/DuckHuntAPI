@@ -18,6 +18,12 @@
 			<key column="CharacterId"/>
 			<one-to-many class="Image"/>
 		</bag>
+		
+		<bag name = "animations"
+			 cascade="all-delete-orphan">
+			<key column="CharacterId"/>
+			<one-to-many class="Animation"/>
+		</bag>
     </class>
 
 </hibernate-mapping>
