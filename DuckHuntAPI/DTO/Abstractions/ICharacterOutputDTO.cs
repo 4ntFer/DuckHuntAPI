@@ -1,9 +1,9 @@
 ﻿using DuckHuntAPI.Models;
 using System.Collections.Generic;
 
-namespace DuckHuntAPI.DTO
+namespace DuckHuntAPI.DTO.Abstractions
 {
-    
+
     public abstract class ICharacterOutputDTO
     {
         public int id { set; get; }
@@ -11,7 +11,8 @@ namespace DuckHuntAPI.DTO
         public IList<IDictionary<object, object>> images { set; get; }
         public IList<IDictionary<object, object>> animations { set; get; }
 
-        public ICharacterOutputDTO(Character character) {
+        public ICharacterOutputDTO(Character character)
+        {
             id = character.id;
             name = character.name;
             images = GetDTOImages(character.images);

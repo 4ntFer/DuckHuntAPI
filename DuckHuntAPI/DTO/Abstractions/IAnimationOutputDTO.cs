@@ -1,4 +1,4 @@
-﻿namespace DuckHuntAPI.DTO
+﻿namespace DuckHuntAPI.DTO.Abstractions
 {
     //TODO
     public abstract class IAnimationOutputDTO
