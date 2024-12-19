@@ -1,8 +1,5 @@
-﻿using DuckHuntAPI.ClassObjects;
-using DuckHuntAPI.Models;
-using DuckHuntAPI.ObjectFactory;
+﻿using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
-using DuckHuntAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,68 +12,42 @@ namespace DuckHuntAPI.Controllers
     [Route("Animation")]
     public class AnimationController : Controller
     {
+        // Retorna todas as Animações
+        // TODO
         [HttpGet]
-        public ActionResult Get() {
+        public IActionResult Get() {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
-            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
 
-            CharacterRepository characterRepository = supplier.characterRepository;
-            AnimationGameObjectAttributesBuilder Factory = supplier.animationObjectFactory;
-
-            List<Animation> animationsBDList = supplier.animationRepository.findAll();
-            List<Dictionary<string, object>> animationsReturned;
-
-            if (animationsBDList.Count != 0)
-            {
-                animationsReturned = new List<Dictionary<string, object>>();
-                foreach (Animation abd in animationsBDList)
-                {   
-                    AnimationGameObject aobj = new AnimationGameObject(abd, Factory);
-                    Dictionary<string, object> ar = new Dictionary<string, object>();
-                    List<string> imgUrlList = new List<string>();
-
-                    ar["Name"] = abd.Name;
-                    ar["CharacterName"] = characterRepository.FindById(abd.CharacterId).name;
-                    ar["Images"] = imgUrlList;
-
-                    foreach (ImageGameObject imgobj in aobj.GetImages()) {
-                        imgUrlList.Add(imgobj.url);
-                    }
-
-                    animationsReturned.Add(ar);
-                }
-                return Ok(animationsReturned);
-            }
-
-            return null;
+            return BadRequest("Sem implementação");
         }
 
-       [HttpGet]
-       [Route("{name}")]
-       public IActionResult Get(string name)
-       {
-            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
-            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
-
-            AnimationRepository animationRepository = supplier.animationRepository;
-            AnimationGameObjectAttributesBuilder animationFactory = supplier.animationObjectFactory;
-
-            Animation animation = animationRepository.findByName(name);
-            AnimationGameObject animationObject;
-
-            if (animation != null) {
-                animationObject = new AnimationGameObject(animationRepository.findByName(name), animationFactory);
-                List<string> imgList = new List<string>();
-                foreach (ImageGameObject img in animationObject.GetImages())
-                {
-                    imgList.Add(img.url);
-                }
-
-                return Ok(imgList);
-            }
-
-
-            return BadRequest("Animation does not exist.");
-       }
+        // Retorna uma animação filtrando por ID
+        // TODO
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult GetById(int id) {
+            return BadRequest("Sem implementação");
+        }
+        // Retorna uma animação filtrando por nome
+        // TODO
+        [HttpGet]
+        [Route("byName/{name}")]
+        public IActionResult GetByName(string name) {
+            return BadRequest("Sem implementação");
+        }
+        // Retorna as imagens da animação filtrada por id
+        // TODO
+        [HttpGet]
+        [Route("{id}/images")]
+        public IActionResult GetImagesById(int id) {
+            return BadRequest("Sem implementação");
+        }
+        // Retorna as imagens da animação filtrada por Nome
+        // TODO
+        [HttpGet]
+        [Route("byName/{name}/images")]
+        public IActionResult GetImagesByName(string name) {
+            return BadRequest("Sem implementação");
+        }
     }
 }

@@ -1,8 +1,6 @@
-﻿using DuckHuntAPI.ClassObjects;
+﻿
 using DuckHuntAPI.Models;
-using DuckHuntAPI.ObjectFactory;
 using DuckHuntAPI.Repository;
-using DuckHuntAPI.Utils;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -15,40 +13,40 @@ namespace DuckHuntAPI.Controllers
     [Route("character")]
     public class CharactersController : Controller
     {
+        // Retorna todos os Characters
+        // TODO
         [HttpGet]
-        public ActionResult Get(int id) {
+        public IActionResult Get() {
+            return BadRequest("Sem implementação");
+        }
+        // Retorna o character filtrando por ID
+        // TODO
+        [HttpGet]
+        [Route("{id}")]
+        public IActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
-            RepositoryAndObjectFactorySupplier supplier = new RepositoryAndObjectFactorySupplier(session);
+            CharacterRepository repository = new CharacterRepository(session);
+            Character c = repository.FindById(id);
 
-            CharacterGameObject characterObject = new CharacterGameObject(supplier.characterRepository.FindById(id),
-                                                                  supplier.characterObjectFactory);
+            return BadRequest("Sem Implementação");
+        }
+        // Retorna as imagens do character filtrando por ID
+        // TODO: uso do DTO
+        [HttpGet]
+        [Route("{id}/images")]
+        public IActionResult GetCharacterImages(int id) {
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            CharacterRepository repository = new CharacterRepository(session);
+            Character c = repository.FindById(id);
 
-            Dictionary<string, object> result = new Dictionary<string, object>();
-            List<Dictionary<string, object>> AnimationsInResult = new List<Dictionary<string, object>>();
-
-            result.Add("Id", characterObject.id);
-            result.Add("Name", characterObject.name);
-            result.Add("Animations", AnimationsInResult);
-
-            foreach(AnimationGameObject a in characterObject.GetAnimations()) {
-                //id
-                //name
-                //images
-                Dictionary<string, object> animationInResult = new Dictionary<string, object>();
-                List<string> imageUrlList = new List<string>();
-
-                AnimationsInResult.Add(animationInResult);
-
-                animationInResult.Add("Id", a.Id);
-                animationInResult.Add("Name", a.Name);
-                animationInResult.Add("Images", imageUrlList);
-
-                foreach (ImageGameObject i in a.GetImages()) {
-                    imageUrlList.Add(i.url);
-                }
-            }
-
-            return Ok(result);
+            return BadRequest("Sem Implementação");
+        }
+        // Retorna as animações do character filtrando por ID
+        //TODO
+        [HttpGet]
+        [Route("{id}/animations")]
+        public IActionResult GetCharacterAnimations(int id) {
+            return BadRequest("Sem Implementação");
         }
     }
 }

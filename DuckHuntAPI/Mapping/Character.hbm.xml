@@ -5,13 +5,25 @@
     <class name="Character" table="Character">
 
         <id name="id">
-            <column name="id" sql-type="int" not-null="false"/>
+            <column name="Id" sql-type="int" not-null="false"/>
             <generator class="uuid.hex" />
         </id>
 
         <property name="name">
             <column name="Name" length="255" not-null="false" />
         </property>
+		
+		<bag name="images"
+			 cascade="all-delete-orphan">
+			<key column="CharacterId"/>
+			<one-to-many class="Image"/>
+		</bag>
+		
+		<bag name = "animations"
+			 cascade="all-delete-orphan">
+			<key column="CharacterId"/>
+			<one-to-many class="Animation"/>
+		</bag>
     </class>
 
 </hibernate-mapping>

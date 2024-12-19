@@ -11,8 +11,8 @@ namespace DuckHuntAPI.Models
     public class Animation
     {
         public virtual int Id { get; set; }
-        public virtual int CharacterId {get; set;}
-        public virtual string Name { get; set; }
-        public virtual int ImageSeqId { get; set; }
+        public virtual int characterId { get; set; }
+        public virtual string name { get; set; }
+        public virtual IList<ImageSeq> imageSequence { get; set;}
     }
 }

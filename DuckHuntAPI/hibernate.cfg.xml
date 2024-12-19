@@ -12,7 +12,7 @@
 		<session-factory>
 			<property name="dialect">NHibernate.Dialect.MsSql2012Dialect</property>
 			<property name="connection.connection_string">
-				Server=localhost\SQLEXPRESS;initial catalog=DuckHunt;Integrated Security=True
+				Server=localhost;initial catalog=DuckHuntAPI;Integrated Security=SSPI
 			</property>
 
 			<mapping assembly="DuckHuntAPI" />
