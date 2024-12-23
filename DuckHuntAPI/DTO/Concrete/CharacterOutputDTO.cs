@@ -31,7 +31,7 @@ namespace DuckHuntAPI.DTO.Concrete
                 ImageOutputDTO imageDTO = new ImageOutputDTO(img);
                 IDictionary<object,object> imgDictionary = new Dictionary<object, object>();
                 imgDictionary.Add("id", imageDTO.id);
-                imgDictionary.Add("ImageLink", imageDTO.id);
+                imgDictionary.Add("ImageLink", imageDTO.imageLink);
                 result.Add(imgDictionary);
             }
             return result;
