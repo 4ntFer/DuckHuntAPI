@@ -2,6 +2,7 @@
 using DuckHuntAPI.Models;
 using NHibernate.Mapping;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Transactions;
 
 namespace DuckHuntAPI.DTO.Concrete
@@ -31,6 +32,7 @@ namespace DuckHuntAPI.DTO.Concrete
                 IDictionary<object,object> imgDictionary = new Dictionary<object, object>();
                 imgDictionary.Add("id", imageDTO.id);
                 imgDictionary.Add("ImageLink", imageDTO.id);
+                result.Add(imgDictionary);
             }
             return result;
         }
