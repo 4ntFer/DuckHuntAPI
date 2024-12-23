@@ -1,5 +1,6 @@
 ﻿using DuckHuntAPI.DTO.Abstractions;
 using DuckHuntAPI.Models;
+using NHibernate.Mapping;
 using System.Collections.Generic;
 using System.Transactions;
 
@@ -10,18 +11,13 @@ namespace DuckHuntAPI.DTO.Concrete
         public CharacterOutputDTO(Character character) : base(character){}
 
         protected override IList<IDictionary<object, object>> GetDTOAnimations(IList<Animation> animations)
-        {
+        { 
             IList<IDictionary<object, object>> result = new List<IDictionary<object,object>>();
             foreach (Animation a in animations) {
+                AnimationOutputDTO animationDTO = new AnimationOutputDTO(a);
                 IDictionary<object,object> animationDictionary = new Dictionary<object, object>();
-                IList<string> imagesLink = new List<string>(a.imageSequence.Count);
-                foreach (ImageSeq i in a.imageSequence) {
-                    //TODO atribuir um link por imagem
-                    // O que está implementado representa um teste
-                    imagesLink.Insert(i.imageIndex, "URL:/" + i.image.id);
-                }
                 animationDictionary.Add("name", a.name);
-                animationDictionary.Add("images", imagesLink);
+                animationDictionary.Add("framesImageLink", animationDTO.framesImageLink);
                 result.Add(animationDictionary);
             }
             return result;
@@ -31,11 +27,10 @@ namespace DuckHuntAPI.DTO.Concrete
         {
             IList<IDictionary<object, object>> result = new List<IDictionary<object, object>>();
             foreach (Image img in images) {
-                //TODO atribuir um link por imagem
-                // O que está implementado representa um teste
+                ImageOutputDTO imageDTO = new ImageOutputDTO(img);
                 IDictionary<object,object> imgDictionary = new Dictionary<object, object>();
-                imgDictionary.Add("id", img.id);
-                imgDictionary.Add("ImageLink", "URL:/" + img.id);
+                imgDictionary.Add("id", imageDTO.id);
+                imgDictionary.Add("ImageLink", imageDTO.id);
             }
             return result;
         }
