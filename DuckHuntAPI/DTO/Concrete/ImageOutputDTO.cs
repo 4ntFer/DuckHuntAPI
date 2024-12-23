@@ -11,6 +11,7 @@ namespace DuckHuntAPI.DTO.Concrete
 
         protected override string GetImageLink(Image image)
         {
+            //TODO: retornar link real
             return "hostname:/" + image.id;
         }
     }
