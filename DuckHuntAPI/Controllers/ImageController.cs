@@ -1,6 +1,7 @@
 ﻿using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository;
 using Microsoft.AspNetCore.Mvc;
+using NHibernate;
 using System.Collections.Generic;
 
 namespace DuckHuntAPI.Controllers
@@ -32,6 +33,19 @@ namespace DuckHuntAPI.Controllers
 
             return BadRequest("Sem implementação");
         }
-        
+
+        [HttpGet]
+        [Route("png")]
+        public IActionResult GetImagePng(int id) {
+            ISession session = NHibernateHelper.GetSession(HttpContext);
+            ImageRepository imageRepository = new ImageRepository(session);
+            Image image = imageRepository.FindById(id);
+
+            if (image == null) {
+                return NotFound();
+            }
+
+            return File(image.data, "image/png");
+        }
     }
 }
