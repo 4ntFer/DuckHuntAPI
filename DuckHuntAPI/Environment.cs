@@ -7,6 +7,7 @@ namespace DuckHuntAPI
 {
     public class Environment
     {
+        //TODO: SOURCE_URL auto-configurável
         public static readonly string SOURCE_URL = "https://localhost:44312";
     }
 }
