@@ -36,5 +36,16 @@ namespace DuckHuntAPI.DTO.Concrete
             }
             return result;
         }
+
+        public static IList<ICharacterOutputDTO> CreateListOf(IList<Character> charactersList) {
+            IList<ICharacterOutputDTO> result = new List<ICharacterOutputDTO>();
+
+            foreach (Character c in charactersList)
+            {
+                result.Add(new CharacterOutputDTO(c));
+            }
+
+            return result;
+        }
     }
 }
