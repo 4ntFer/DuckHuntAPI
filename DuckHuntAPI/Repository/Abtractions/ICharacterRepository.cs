@@ -1,5 +1,6 @@
 ﻿using DuckHuntAPI.Models;
 using NHibernate;
+using System.Collections.Generic;
 
 namespace DuckHuntAPI.Repository.Abtractions
 {
@@ -9,6 +10,6 @@ namespace DuckHuntAPI.Repository.Abtractions
         {
         }
 
-        public abstract Character FindByName(string name);
+        public abstract IList<Character> FindByName(string name);
     }
 }
