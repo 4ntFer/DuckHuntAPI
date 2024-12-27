@@ -20,5 +20,17 @@ namespace DuckHuntAPI.DTO.Concrete
 
             return result;
         }
+
+        public static IList<IAnimationOutputDTO> CreateListOf(IList<Animation> animationsList)
+        {
+            IList<IAnimationOutputDTO> result = new List<IAnimationOutputDTO>();
+
+            foreach (Animation animation in animationsList)
+            {
+                result.Add(new AnimationOutputDTO(animation));
+            }
+
+            return result;
+        }
     }
 }
