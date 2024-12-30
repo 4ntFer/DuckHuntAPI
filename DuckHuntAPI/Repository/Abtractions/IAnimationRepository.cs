@@ -11,6 +11,6 @@ namespace DuckHuntAPI.Repository.Abtractions
         }
 
         public abstract IList<Animation> OfCharacter(int characterId);
-        public abstract Animation FindByName(string name);
+        public abstract IList<Animation> FindByName(string name);
     }
 }

@@ -23,7 +23,7 @@ namespace DuckHuntAPI.Repository.Concrete
             return _session.Get<Animation>(id);
         }
 
-        public override Animation FindByName(string name)
+        public override IList<Animation> FindByName(string name)
         {
             IList<Animation> result = 
                 _session.Query<Animation>().
@@ -32,7 +32,7 @@ namespace DuckHuntAPI.Repository.Concrete
             if(result.Count  == 0)
                 return null;
 
-            return result.ElementAt(0);
+            return result;
         }
 
         public override IList<Animation> OfCharacter(int characterId)
