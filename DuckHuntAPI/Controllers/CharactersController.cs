@@ -1,6 +1,7 @@
 ﻿
+using DuckHuntAPI.DTO.Concrete;
 using DuckHuntAPI.Models;
-using DuckHuntAPI.Repository;
+using DuckHuntAPI.Repository.Concrete;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -14,39 +15,52 @@ namespace DuckHuntAPI.Controllers
     public class CharactersController : Controller
     {
         // Retorna todos os Characters
-        // TODO
         [HttpGet]
-        public IActionResult Get() {
-            return BadRequest("Sem implementação");
+        public IActionResult GetAll() {
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            CharacterRepository repository = new CharacterRepository(session);
+
+            return Ok(
+                CharacterOutputDTO.CreateListOf(
+                    repository.FindAll()
+                    )
+                );
         }
+
         // Retorna o character filtrando por ID
-        // TODO
         [HttpGet]
         [Route("{id}")]
         public IActionResult Get(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             CharacterRepository repository = new CharacterRepository(session);
-            Character c = repository.FindById(id);
+            Character result = repository.FindById(id);
 
-            return BadRequest("Sem Implementação");
+            if (result == null)
+                return BadRequest($"Character with id = {id} does not exist.");
+
+            return Ok(new CharacterOutputDTO(result));
         }
+
         // Retorna as imagens do character filtrando por ID
-        // TODO: uso do DTO
         [HttpGet]
         [Route("{id}/images")]
         public IActionResult GetCharacterImages(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
-            CharacterRepository repository = new CharacterRepository(session);
-            Character c = repository.FindById(id);
+            ImageRepository repository = new ImageRepository(session);
+            IList<Image> result = repository.OfCharacter(id);
 
-            return BadRequest("Sem Implementação");
+            return Ok(ImageOutputDTO.CreateListOf(result));
         }
+
         // Retorna as animações do character filtrando por ID
-        //TODO
         [HttpGet]
         [Route("{id}/animations")]
         public IActionResult GetCharacterAnimations(int id) {
-            return BadRequest("Sem Implementação");
+            NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
+            AnimationRepository repository = new AnimationRepository(session);
+            IList<Animation> result = repository.OfCharacter(id);
+
+            return Ok(AnimationOutputDTO.CreateListOf(result));
         }
     }
 }
