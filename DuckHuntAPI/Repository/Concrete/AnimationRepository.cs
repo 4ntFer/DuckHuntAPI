@@ -29,9 +29,6 @@ namespace DuckHuntAPI.Repository.Concrete
                 _session.Query<Animation>().
                 Where(a => a.name == name).ToList();
 
-            if(result.Count  == 0)
-                return null;
-
             return result;
         }
 
