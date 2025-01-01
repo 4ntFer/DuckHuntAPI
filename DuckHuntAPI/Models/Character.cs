@@ -12,7 +12,7 @@ namespace DuckHuntAPI.Models
     {
         public virtual int id { get; set; }
         public virtual string name { get; set; }
-        public virtual IList<Image> images { get; set; }
+        public virtual IList<CharacterImage> characterImages { get; set; }
         public virtual IList<Animation> animations { get; set; }
     }
 }

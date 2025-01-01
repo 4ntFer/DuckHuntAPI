@@ -13,10 +13,10 @@
             <column name="Name" length="255" not-null="false" />
         </property>
 		
-		<bag name="images"
+		<bag name="characterImages"
 			 cascade="all-delete-orphan">
 			<key column="CharacterId"/>
-			<one-to-many class="Image"/>
+			<one-to-many class="CharacterImage"/>
 		</bag>
 		
 		<bag name = "animations"

@@ -23,17 +23,18 @@ namespace DuckHuntAPI.DTO.Concrete
             }
             return result;
         }
-
-        protected override IList<IDictionary<object, object>> GetDTOImages(IList<Image> images)
+        protected override IList<IDictionary<object, object>> GetDTOImages(IList<CharacterImage> images)
         {
             IList<IDictionary<object, object>> result = new List<IDictionary<object, object>>();
-            foreach (Image img in images) {
-                ImageOutputDTO imageDTO = new ImageOutputDTO(img);
-                IDictionary<object,object> imgDictionary = new Dictionary<object, object>();
+            foreach (CharacterImage img in images)
+            {
+                ImageOutputDTO imageDTO = new ImageOutputDTO(img.image);
+                IDictionary<object, object> imgDictionary = new Dictionary<object, object>();
                 imgDictionary.Add("id", imageDTO.id);
                 imgDictionary.Add("ImageLink", imageDTO.imageLink);
                 result.Add(imgDictionary);
             }
+
             return result;
         }
 
