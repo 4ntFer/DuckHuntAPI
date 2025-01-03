@@ -1,4 +1,6 @@
-﻿namespace DuckHuntAPI.Models
+﻿using System;
+
+namespace DuckHuntAPI.Models
 {
     // <summary>
     // Class <c>Image<c> correspondent database Images's Table.
