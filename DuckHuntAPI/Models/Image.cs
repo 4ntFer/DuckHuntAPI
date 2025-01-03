@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DuckHuntAPI.Models
 {
@@ -12,6 +9,5 @@ namespace DuckHuntAPI.Models
     {
         public virtual int id { get; set; }
         public virtual Byte[] data { get; set; }
-        public virtual Character character { get; set; }
     }
 }

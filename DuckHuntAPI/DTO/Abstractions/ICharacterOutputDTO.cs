@@ -14,10 +14,10 @@ namespace DuckHuntAPI.DTO.Abstractions
         {
             id = character.id;
             name = character.name;
-            images = GetDTOImages(character.images);
+            images = GetDTOImages(character.characterImages);
             animations = GetDTOAnimations(character.animations);
         }
-        protected abstract IList<IDictionary<object, object>> GetDTOImages(IList<Image> images);
+        protected abstract IList<IDictionary<object, object>> GetDTOImages(IList<CharacterImage> images);
         protected abstract IList<IDictionary<object, object>> GetDTOAnimations(IList<Animation> animations);
     }
 }

@@ -1,6 +1,8 @@
 ﻿using DuckHuntAPI.Models;
 using DuckHuntAPI.Repository.Abtractions;
 using NHibernate;
+using NHibernate.Linq.Functions;
+using NHibernate.SqlCommand;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -39,8 +41,16 @@ namespace DuckHuntAPI.Repository.Concrete
 
         public override IList<Image> OfCharacter(int CharacterId)
         {
-            return _session.Query<Image>().
-                Where(img => img.character.id == CharacterId).ToList();
+            Image img = null;
+            CharacterImage characterImage = null;
+            return _session.QueryOver<Image>(() => img)
+                .JoinEntityAlias(
+                    () => characterImage,
+                    () => img.id == characterImage.id,
+                    JoinType.InnerJoin
+                )
+                .Where(() => characterImage.character.id == CharacterId)
+                .List();
         }
     }
 }

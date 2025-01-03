@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	namespace="DuckHuntAPI.Models" assembly="DuckHuntAPI">
+	<class name="CharacterImage" table="CharacterImage">
+		<id name="id">
+			<column name="Id" sql-type="int"/>
+		</id>
+		<many-to-one
+			not-null="true"
+			name="character"
+			class="Character"
+			column="CharacterId"/>
+		<many-to-one
+			not-null="true"
+			name="image"
+			class="Image"
+			column="ImageId"/>
+	</class>
+</hibernate-mapping>
