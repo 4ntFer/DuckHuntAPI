@@ -8,6 +8,7 @@ using System.Collections.Generic;
 
 namespace DuckHuntAPI.Controllers
 {
+    [ApiController]
     [Route("api/scenery")]
     public class SceneryController : ControllerBase
     {
@@ -35,6 +36,7 @@ namespace DuckHuntAPI.Controllers
 
         // Retorna os cenários por id
         [HttpGet]
+        [Route("{id}")]
         public IActionResult GetById(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             ISceneryRepository repository = new SceneryRepository(session);
@@ -50,6 +52,7 @@ namespace DuckHuntAPI.Controllers
 
         // Retorna os cenários por tipo
         [HttpGet]
+        [Route("byType/{type}")]
         public IActionResult GetByType(string type) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             ISceneryRepository repository = new SceneryRepository(session);
@@ -60,7 +63,7 @@ namespace DuckHuntAPI.Controllers
 
         // Retorna a imagem do cenário
         [HttpGet]
-
+        [Route("{id}/image")]
         public IActionResult GetImage(int id) {
             NHibernate.ISession session = NHibernateHelper.GetSession(HttpContext);
             ISceneryRepository repository = new SceneryRepository(session);
