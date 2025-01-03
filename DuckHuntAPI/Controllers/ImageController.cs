@@ -9,7 +9,7 @@ using System.Collections.Generic;
 namespace DuckHuntAPI.Controllers
 {
     [ApiController]
-    [Route("image")]
+    [Route("api/image")]
     public class ImageController : Controller
     {
         // Retorna todas as Imagens
@@ -37,21 +37,6 @@ namespace DuckHuntAPI.Controllers
                 return BadRequest($"Image with id = {id} does not exist");
 
             return Ok(new ImageOutputDTO(result));
-        }
-
-        // Retorna arquivo png da imagem
-        [HttpGet]
-        [Route("png")]
-        public IActionResult GetImagePng(int id) {
-            ISession session = NHibernateHelper.GetSession(HttpContext);
-            ImageRepository imageRepository = new ImageRepository(session);
-            Image result = imageRepository.FindById(id);
-
-            if (result == null) {
-                return NotFound();
-            }
-
-            return File(result.data, "image/png");
         }
     }
 }

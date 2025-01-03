@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DuckHuntAPI.Controllers
 {
     [ApiController]
-    [Route("character")]
+    [Route("api/character")]
     public class CharactersController : Controller
     {
         // Retorna todos os Characters

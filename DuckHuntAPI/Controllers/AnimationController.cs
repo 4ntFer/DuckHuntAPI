@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace DuckHuntAPI.Controllers
 {
     [ApiController]
-    [Route("Animation")]
+    [Route("api/animation")]
     public class AnimationController : Controller
     {
         // Retorna todas as Animações
