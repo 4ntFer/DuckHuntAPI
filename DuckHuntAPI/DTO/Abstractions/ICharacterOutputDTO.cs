@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace DuckHuntAPI.DTO.Abstractions
 {
-
     public abstract class ICharacterOutputDTO
     {
         public int id { set; get; }

@@ -5,7 +5,6 @@ using System.Drawing;
 
 namespace DuckHuntAPI.DTO.Abstractions
 {
-    //TODO
     public abstract class IAnimationOutputDTO
     {
         public int id { get; set; }

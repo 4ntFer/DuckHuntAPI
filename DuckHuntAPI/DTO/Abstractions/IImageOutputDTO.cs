@@ -11,7 +11,6 @@ namespace DuckHuntAPI.DTO.Abstractions
             id = image.id;
             imageLink = GetImageLink(image);
         }
-
         protected abstract string GetImageLink(Image image);
     }
 }
