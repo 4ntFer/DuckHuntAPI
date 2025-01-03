@@ -16,6 +16,7 @@
     <None Remove="Image.hbm.xml" />
     <None Remove="Mapping\Animation.hbm.xml" />
     <None Remove="Mapping\ImageSeq.hbm.xml" />
+    <None Remove="Mapping\Scenery.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -23,6 +24,7 @@
     <EmbeddedResource Include="Mapping\Character.hbm.xml" />
     <EmbeddedResource Include="Mapping\Image.hbm.xml" />
     <EmbeddedResource Include="Mapping\ImageSeq.hbm.xml" />
+    <EmbeddedResource Include="Mapping\Scenery.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
