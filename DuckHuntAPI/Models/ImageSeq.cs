@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace DuckHuntAPI.Models
+﻿namespace DuckHuntAPI.Models
 {
     // <summary>
     // Class <c>ImageSeq<c> correspondent database ImageSeq's Table.
