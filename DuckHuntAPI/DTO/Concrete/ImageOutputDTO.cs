@@ -12,7 +12,7 @@ namespace DuckHuntAPI.DTO.Concrete
 
         protected override string GetImageLink(Image image)
         {
-            return Environment.SOURCE_URL + "/image/png?id=" + image.id;
+            return Environment.SOURCE_URL + "/imagefile?id=" + image.id;
         }
 
         public static IList<IImageOutputDTO> CreateListOf(IList<Image> imagesList)
