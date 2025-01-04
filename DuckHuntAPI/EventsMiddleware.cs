@@ -28,7 +28,7 @@ namespace DuckHuntAPI
 
             // Let the middleware pipeline run
             securityExecutor = new SecurityExecutor(context);
-            if(!securityExecutor.IsBanned())
+            if(!securityExecutor.CanAccess())
                 await _next(context);
 
             // Do tasks after middleware here, aka 'EndRequest'
