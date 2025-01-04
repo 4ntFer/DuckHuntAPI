@@ -13,6 +13,7 @@ namespace DuckHuntAPI.Security
         public int clientAllowedAccesses { get; set; }
         public int clientAllowedAccessesRange { get; set; }
         public int banTime { get; set; }
+        protected string clientIPAddres { get; set; }
 
         public SecurityExecutor(
             HttpContext context, 
@@ -23,9 +24,10 @@ namespace DuckHuntAPI.Security
             this.clientAllowedAccesses = clientAllowedAccesses;
             this.banTime = banTime;
             this.clientAllowedAccessesRange = clientAllowedAccessesRange;
+            this.clientIPAddres = GetIPAddress();
         }
 
-        protected override string GetIPAddress()
+        private string GetIPAddress()
         {
             string ipAddress = context.Connection.RemoteIpAddress.ToString();
 

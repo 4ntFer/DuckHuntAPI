@@ -10,14 +10,12 @@ namespace DuckHuntAPI.Security
 
         protected HttpContext context { get; set; }
         protected NHibernate.ISession session { get; set; }
-        protected string clientIPAddres { get; set; }
 
         public ISecurityExecutor(
             HttpContext context
         ){
             this.context = context;
             this.session = NHibernateHelper.GetSession(context);
-            this.clientIPAddres = GetIPAddress();
         }
 
         public Boolean CanAccess() // CanAccess
@@ -51,7 +49,6 @@ namespace DuckHuntAPI.Security
                 Ban();
             return false;
         }
-        protected abstract string GetIPAddress();
         protected abstract void ResetAccesses();
         protected abstract bool CanResetAccesses();
         protected abstract void UpdateAccesses();
