@@ -173,6 +173,15 @@ namespace DuckHuntAPI.Security
                 Device d = session.Query<Device>()
                     .Where(d => d.ip == GetIPAddress())
                     .FirstOrDefault();
+
+                DateTime timeResetAccessRange = d.firstAccess.AddDays(1);
+
+                if (timeResetAccessRange.CompareTo(DateTime.Now) <= 0)
+                {
+                    d.firstAccess = DateTime.Now;
+                    d.accesses = 0;
+                }
+
                 d.accesses++;
                 session.Update(d);
                 tx.Commit();
