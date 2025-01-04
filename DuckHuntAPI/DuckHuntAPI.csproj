@@ -18,6 +18,8 @@
     <None Remove="Mapping\CharacterImage.hbm.xml" />
     <None Remove="Mapping\ImageSeq.hbm.xml" />
     <None Remove="Mapping\Scenery.hbm.xml" />
+    <None Remove="Security\Mapping\Ban.hbm.xml" />
+    <None Remove="Security\Mapping\Device.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,6 +29,8 @@
     <EmbeddedResource Include="Mapping\Image.hbm.xml" />
     <EmbeddedResource Include="Mapping\ImageSeq.hbm.xml" />
     <EmbeddedResource Include="Mapping\Scenery.hbm.xml" />
+    <EmbeddedResource Include="Security\Mapping\Device.hbm.xml" />
+    <EmbeddedResource Include="Security\Mapping\Ban.hbm.xml" />
   </ItemGroup>
 
   <ItemGroup>

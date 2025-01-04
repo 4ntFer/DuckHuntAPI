@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using DuckHuntAPI.Security;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,16 @@ namespace DuckHuntAPI
 
         public async Task Invoke(HttpContext context)
         {
+            SecurityExecutor securityExecutor = null;
+
             // Do tasks before other middleware here, aka 'BeginRequest'
             NHibernateHelper.OpenSession(context);
+
             // Let the middleware pipeline run
-            await _next(context);
+            securityExecutor = new SecurityExecutor(context);
+            if(!securityExecutor.IsBanned())
+                await _next(context);
+
             // Do tasks after middleware here, aka 'EndRequest'
             NHibernateHelper.CloseSession(context);
         }
