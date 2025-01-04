@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+	namespace="DuckHuntAPI.Security.Models" assembly="DuckHuntAPI">
+
+	<class name="Device" table="Device">
+		<id name="id">
+			<column name="id" sql-type="int" not-null="false"/>
+		</id>
+		<property name="ip">
+			<column name="ip" length="12"/>
+		</property>
+		<property name="banned">
+			<column name="banned" sql-type="int"/>
+		</property>
+		<property name="firstAccess">
+			<column name="firstAccess" sql-type="datetime"/>
+		</property>
+		<property name="accesses">
+			<column name="accesses" sql-type="int"/>
+		</property>
+	</class>
+</hibernate-mapping>
