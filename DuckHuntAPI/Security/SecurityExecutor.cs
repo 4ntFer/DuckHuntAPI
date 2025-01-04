@@ -1,6 +1,5 @@
 ﻿using DuckHuntAPI.Security.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using NHibernate;
 using NHibernate.SqlCommand;
@@ -9,64 +8,43 @@ using System.Linq;
 
 namespace DuckHuntAPI.Security
 {
-    public class SecurityExecutor
+    public class SecurityExecutor : ISecurityExecutor
     {
-        protected HttpContext context { get; set; }
-        protected NHibernate.ISession session { get; set; }
+        public int clientAllowedAccesses { get; set; }
+        public int clientAllowedAccessesRange { get; set; }
+        public int banTime { get; set; }
 
-        public SecurityExecutor(HttpContext context) {
-            this.context = context;
-            this.session = NHibernateHelper.GetSession(context);
-        }
-
-        public Boolean IsBanned()
+        public SecurityExecutor(
+            HttpContext context, 
+            int clientAllowedAccesses,
+            int clientAllowedAccessesRange,
+            int banTime) : base(context)
         {
-            Device device = session.Query<Device>()
-                .Where(d => d.ip == GetIPAddress())
-                .FirstOrDefault();
-
-            if (device == null) // device não está retistrado
-            {
-                RegisterIp();
-            }
-            else
-            { // device está registrado
-                if (device.banned == 1)
-                {
-                    if (CanUnban())
-                    {
-                        Unban();
-                        RegisterIp();
-                    }
-                    else
-                    {
-                        return true;
-                    }
-                }
-            }
-
-            RegisterAccess();
-            if (CanBan())
-                Ban();
-            return false;
+            this.clientAllowedAccesses = clientAllowedAccesses;
+            this.banTime = banTime;
+            this.clientAllowedAccessesRange = clientAllowedAccessesRange;
         }
 
-        protected string GetIPAddress()
+        protected override string GetIPAddress()
         {
             string ipAddress = context.Connection.RemoteIpAddress.ToString();
 
             return ipAddress;
         }
 
-        private void Ban()
+        protected override Device GetCurrentClientDevice() {
+            return session.Query<Device>()
+                .Where(d => d.ip == clientIPAddres)
+                .FirstOrDefault();
+        }
+
+        protected override void Ban()
         {
             ITransaction tx = session.BeginTransaction();
 
             try
             {
-                Device device = session.Query<Device>()
-                    .Where(d => d.ip == GetIPAddress())
-                    .FirstOrDefault();
+                Device device = GetCurrentClientDevice();
                 
                 Ban deviceBan = new Ban();
 
@@ -82,7 +60,7 @@ namespace DuckHuntAPI.Security
 
                 deviceBan.deviceId = device.id;
                 deviceBan.startTime = DateTime.Now;
-                deviceBan.endTime = (DateTime.Now).AddDays(7);
+                deviceBan.endTime = (DateTime.Now).AddDays(banTime);
 
                 device.banned = 1;
 
@@ -101,12 +79,11 @@ namespace DuckHuntAPI.Security
             }
         }
 
-        private bool CanBan()
+        protected override bool CanBan()
         {
-            Device d = session.Query<Device>().
-                Where(d => d.ip == GetIPAddress())
-                .FirstOrDefault();
-            if (d.accesses >= 1000)
+            Device d = GetCurrentClientDevice();
+
+            if (d.accesses >= clientAllowedAccesses)
             {
                 return true;
             }
@@ -114,15 +91,13 @@ namespace DuckHuntAPI.Security
             return false;
         }
 
-        private void Unban()
+        protected override void Unban()
         {
             ITransaction tx = session.BeginTransaction();
 
             try
             {
-                Device device = session.Query<Device>()
-                    .Where(d => d.ip == GetIPAddress())
-                    .FirstOrDefault();
+                Device device = GetCurrentClientDevice();
 
                 Ban deviceBan = session.Query<Ban>()
                     .Where(db => db.deviceId == device.id)
@@ -143,7 +118,7 @@ namespace DuckHuntAPI.Security
             }
         }
 
-        private bool CanUnban()
+        protected override bool CanUnban()
         {
 
             Device device = null;
@@ -155,7 +130,7 @@ namespace DuckHuntAPI.Security
                     () => deviceBan.deviceId == device.id,
                     JoinType.InnerJoin
                 )
-                .Where(() => device.ip == GetIPAddress())
+                .Where(() => device.ip == clientIPAddres)
                 .SingleOrDefault();
 
             if (result.endTime.CompareTo(DateTime.Now) <= 0)
@@ -164,23 +139,51 @@ namespace DuckHuntAPI.Security
             return false;
         }
 
-        private void RegisterAccess()
+        protected override Boolean CanResetAccesses() {
+            Device d = GetCurrentClientDevice();
+
+            DateTime timeResetAccessRange = d.firstAccess.AddDays(clientAllowedAccessesRange);
+
+            if (timeResetAccessRange.CompareTo(DateTime.Now) <= 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        protected override void ResetAccesses()
         {
             ITransaction tx = session.BeginTransaction();
 
             try
             {
-                Device d = session.Query<Device>()
-                    .Where(d => d.ip == GetIPAddress())
-                    .FirstOrDefault();
+                Device d = GetCurrentClientDevice();
 
-                DateTime timeResetAccessRange = d.firstAccess.AddDays(1);
+                d.firstAccess = DateTime.Now;
+                d.accesses = 0;
 
-                if (timeResetAccessRange.CompareTo(DateTime.Now) <= 0)
-                {
-                    d.firstAccess = DateTime.Now;
-                    d.accesses = 0;
-                }
+                session.Update(d);
+                tx.Commit();
+            }
+            catch (Exception e)
+            {
+                tx.Rollback();
+                throw e;
+            }
+            finally
+            {
+                tx.Dispose();
+            }
+        }
+
+        protected override void UpdateAccesses()
+        {
+            ITransaction tx = session.BeginTransaction();
+
+            try
+            {
+                Device d = GetCurrentClientDevice();
 
                 d.accesses++;
                 session.Update(d);
@@ -197,7 +200,7 @@ namespace DuckHuntAPI.Security
             }
         }
 
-        private void RegisterIp()
+        protected override void RegisterIp()
         {
             ITransaction tx = session.BeginTransaction();
 
@@ -213,7 +216,7 @@ namespace DuckHuntAPI.Security
                         .Max(d => d.id) + 1;
                 }
 
-                d.ip = GetIPAddress();
+                d.ip = clientIPAddres;
                 d.banned = 0;
                 d.firstAccess = DateTime.Now;
                 session.SaveOrUpdate(d);
