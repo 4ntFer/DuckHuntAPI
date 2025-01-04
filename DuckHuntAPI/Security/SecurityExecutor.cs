@@ -1,6 +1,5 @@
 ﻿using DuckHuntAPI.Security.Models;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Identity.Client;
 using Microsoft.IdentityModel.Tokens;
 using NHibernate;
 using NHibernate.SqlCommand;
@@ -11,8 +10,19 @@ namespace DuckHuntAPI.Security
 {
     public class SecurityExecutor : ISecurityExecutor
     {
-        public SecurityExecutor(HttpContext context) : base(context)
+        public int clientAllowedAccesses { get; set; }
+        public int clientAllowedAccessesRange { get; set; }
+        public int banTime { get; set; }
+
+        public SecurityExecutor(
+            HttpContext context, 
+            int clientAllowedAccesses,
+            int clientAllowedAccessesRange,
+            int banTime) : base(context)
         {
+            this.clientAllowedAccesses = clientAllowedAccesses;
+            this.banTime = banTime;
+            this.clientAllowedAccessesRange = clientAllowedAccessesRange;
         }
 
         protected override string GetIPAddress()
@@ -50,7 +60,7 @@ namespace DuckHuntAPI.Security
 
                 deviceBan.deviceId = device.id;
                 deviceBan.startTime = DateTime.Now;
-                deviceBan.endTime = (DateTime.Now).AddDays(7);
+                deviceBan.endTime = (DateTime.Now).AddDays(banTime);
 
                 device.banned = 1;
 
@@ -73,7 +83,7 @@ namespace DuckHuntAPI.Security
         {
             Device d = GetCurrentClientDevice();
 
-            if (d.accesses >= 1000)
+            if (d.accesses >= clientAllowedAccesses)
             {
                 return true;
             }
@@ -132,7 +142,7 @@ namespace DuckHuntAPI.Security
         protected override Boolean CanResetAccesses() {
             Device d = GetCurrentClientDevice();
 
-            DateTime timeResetAccessRange = d.firstAccess.AddDays(1);
+            DateTime timeResetAccessRange = d.firstAccess.AddDays(clientAllowedAccessesRange);
 
             if (timeResetAccessRange.CompareTo(DateTime.Now) <= 0)
             {

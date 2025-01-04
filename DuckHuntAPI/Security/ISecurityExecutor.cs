@@ -1,6 +1,7 @@
 ﻿using DuckHuntAPI.Security.Models;
 using Microsoft.AspNetCore.Http;
 using System;
+using System.Security.Cryptography;
 
 namespace DuckHuntAPI.Security
 {
@@ -11,8 +12,9 @@ namespace DuckHuntAPI.Security
         protected NHibernate.ISession session { get; set; }
         protected string clientIPAddres { get; set; }
 
-        public ISecurityExecutor(HttpContext context)
-        {
+        public ISecurityExecutor(
+            HttpContext context
+        ){
             this.context = context;
             this.session = NHibernateHelper.GetSession(context);
             this.clientIPAddres = GetIPAddress();

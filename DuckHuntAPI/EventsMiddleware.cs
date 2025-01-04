@@ -1,8 +1,5 @@
 ﻿using DuckHuntAPI.Security;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace DuckHuntAPI
@@ -27,7 +24,12 @@ namespace DuckHuntAPI
             NHibernateHelper.OpenSession(context);
 
             // Let the middleware pipeline run
-            securityExecutor = new SecurityExecutor(context);
+            securityExecutor = new SecurityExecutor(
+                context,
+                Environment.CLIENT_ALLOWED_ACCESSES,
+                Environment.CLIENT_ALLOWED_ACCESSES_RANGE,
+                Environment.CLIENT_BAN_TIME);
+
             if(!securityExecutor.CanAccess())
                 await _next(context);
 
