@@ -85,7 +85,7 @@ namespace DuckHuntAPI.Security
         {
             Device d = GetCurrentClientDevice();
 
-            if (d.accesses >= clientAllowedAccesses)
+            if (d.accesses >= clientAllowedAccesses && d.banned == 0)
             {
                 return true;
             }
