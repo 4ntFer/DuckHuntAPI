@@ -85,14 +85,6 @@ namespace DuckHuntAPI.Security
         {
             Device d = GetCurrentClientDevice();
 
-            Ban deviceBan = session.Query<Ban>()
-                   .Where(db => db.deviceId == d.id)
-                   .FirstOrDefault();
-
-            if (deviceBan == null) {
-                return false;
-            }
-
             if (d.accesses >= clientAllowedAccesses)
             {
                 return true;
