@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,6 +30,13 @@ namespace DuckHuntAPI
         {
             services.AddHttpContextAccessor();
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("CorsPolicy", builder => {
+                    builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
+                    
+                });
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DuckHuntAPI", Version = "v1" });
@@ -56,6 +64,8 @@ namespace DuckHuntAPI
             app.UseRouting();
 
             app.UseAuthorization();
+            
+            app.UseCors("CorsPolicy");
 
             app.UseEndpoints(endpoints =>
             {
